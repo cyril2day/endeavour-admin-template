@@ -1,6 +1,5 @@
 import { QTableProps } from 'quasar'
 
-
 export const columns: QTableProps['columns'] = [
   /* the ID column */
   {

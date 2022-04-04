@@ -8,9 +8,8 @@ import {
   usernameRules,
   passwordRules,
   userDefault,
-handleSubmit,
+  handleSubmit,
 } from './UserCreate'
-
 
 /**
  * The user id passed as component props
@@ -40,7 +39,6 @@ const feedbacks = ref<string[]>([])
 const isEdit = ref(false)
 const showPwd = ref(false)
 
-
 /**
  * Local methods
  */
@@ -54,7 +52,7 @@ const submit = async () => {
   const result = await handleSubmit(user.value, props.userId)
 
   if (result.state === 'error') {
-    Object.keys(result.data).forEach(key => {
+    Object.keys(result.data).forEach((key) => {
       feedbacks.value.push(result.data[key][0])
     })
   }
@@ -100,9 +98,10 @@ watchEffect(async () => {
   }
 })
 </script>
+
 <template>
   <q-card class="q-ma-md user-create__card">
-    <q-card-section class='user-create__section'>
+    <q-card-section class="user-create__section">
       <q-form
         ref="userForm"
         class="user-create__form"
@@ -153,17 +152,23 @@ watchEffect(async () => {
       </q-form>
     </q-card-section>
 
-    <q-card-actions class='user-create__actions'>
+    <q-card-actions class="user-create__actions">
       <div
-        v-if='feedbacks.length'
+        v-if="feedbacks.length"
         class="user-create__feedback text-caption text-weight-light"
       >
         <q-list dense>
-          <q-item v-for='feedback in feedbacks' :key='feedback'>
+          <q-item v-for="feedback in feedbacks" :key="feedback">
             <q-item-section avatar>
-              <q-icon v-show="feedback.length" name="circle" size='0.8em' class="q-pr-md" color='red' />
+              <q-icon
+                v-show="feedback.length"
+                name="circle"
+                size="0.8em"
+                class="q-pr-md"
+                color="red"
+              />
             </q-item-section>
-            <q-item-section style='color: red'>
+            <q-item-section style="color: red">
               {{ feedback }}
             </q-item-section>
           </q-item>

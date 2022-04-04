@@ -1,12 +1,10 @@
 <script setup lang="ts">
 import { deleteUser, getUsers } from '@/api/users'
-import User from '@/types/user';
+import User from '@/types/user'
 import { useQuasar } from 'quasar'
 import { columns } from './UserIndex'
 
-
-type User = 
-  Pick<User.Bio, 'id' | 'first_name' | 'last_name' | 'email'> &
+type User = Pick<User.Bio, 'id' | 'first_name' | 'last_name' | 'email'> &
   Pick<User.Account, 'username'> &
   User.Permission
 
