@@ -1,10 +1,8 @@
-import User from "@/types/user"
+import User from '@/types/user'
 
 export as namespace Request
 
-
-type UserData = 
-  User.Bio & 
+type UserData = User.Bio &
   Omit<User.Account, 'password' | 'last_login'> &
   User.Permission
 

@@ -1,6 +1,5 @@
 export as namespace User
 
-
 type role = {
   name: string
   slug: string
@@ -31,8 +30,7 @@ declare namespace User {
   interface Account {
     username: string
     password: string
-    default_auth_factor: 
-      'sms' | 'voice' | 'authenticator' | 'email'
+    default_auth_factor: 'sms' | 'voice' | 'authenticator' | 'email'
     authy_id: number
     authy_enabled: number
     authy_verified: number
