@@ -9,6 +9,12 @@ type ValidateCodeParams = {
   code: string
 }
 
+type ChangeUserPasswordParams = {
+  password: string
+  password_current: string
+  password_confirmation: string
+}
+
 export const login = (params: LoginParams) =>
   request({
     url: '/auth/login',
@@ -63,4 +69,11 @@ export const deleteUser = (id: number) =>
   request({
     url: `/user/${id}`,
     method: 'delete',
+  })
+
+export const changeUserPassword = (params: ChangeUserPasswordParams) => 
+  request({
+    url: '/user/change',
+    method: 'post',
+    params,
   })
