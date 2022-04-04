@@ -91,14 +91,14 @@ const resolveRouteIcon = (route: RouteRecordRaw): string => {
   <q-list>
     <q-toolbar class="text-dark bordered main-layout__top-header">
       <q-btn flat round dense icon="business" />
-      <q-toolbar-title>Awesome Inc.</q-toolbar-title>
+      <q-toolbar-title>ABC Corp.</q-toolbar-title>
     </q-toolbar>
 
     <template v-for="route in routes" :key="route">
       <q-item
         v-if="
           (!route.children && route.meta) ||
-          (route.children && route.children.length <= 1)
+          (route.children && route.children.length <= 1 && !route.meta?.hidden)
         "
         :to="route.path"
         :active="link === resolveFullPath(route.path)"
@@ -114,7 +114,7 @@ const resolveRouteIcon = (route: RouteRecordRaw): string => {
 
       <q-expansion-item
         v-if="route.children && route.children.length > 1"
-        :model-value="handleExpand(route.path, route.children)"
+        :default-opened="handleExpand(route.path, route.children)"
         :label="resolveRouteName(route.name)"
         :icon="resolveRouteIcon(route)"
         :content-inset-level="0.5"

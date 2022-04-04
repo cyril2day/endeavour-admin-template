@@ -53,7 +53,7 @@ const toggleDrawerShow = () => {
         class="topheader__actions"
       >
         <q-list style="min-width: 200px">
-          <q-item clickable dense padding>
+          <q-item clickable dense padding to="/settings">
             <q-item-section class="text-body2 text-weight-light"
               >Account Settings</q-item-section
             >

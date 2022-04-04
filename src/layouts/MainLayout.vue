@@ -1,12 +1,18 @@
 <script setup lang="ts">
 import TopHeader from './TopHeader.vue'
 import LeftDrawer from './LeftDrawer.vue'
+import useAppStore from '@/stores/app'
 
 const drawerIsShown = ref(false)
+const appStore = useAppStore()
 
 const handleDrawerIsShown = (event: boolean) => {
   drawerIsShown.value = event
 }
+
+watchEffect(() => {
+  appStore.leftDrawerIsShown = drawerIsShown.value
+})
 </script>
 
 <template>
