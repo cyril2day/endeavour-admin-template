@@ -2,7 +2,7 @@ import { boot } from 'quasar/wrappers'
 import NProgress from 'nprogress'
 import { NavigationGuardNext, RouteLocationNormalized } from 'vue-router'
 import useUserStore from '@/stores/user'
-import { getToken } from '@/utils/storage'
+import { setLastPath, getToken, getLastPath, Token } from '@/utils/storage'
 import usePermissionStore from '@/stores/permission'
 
 /* Turn off loading spinner
@@ -11,15 +11,15 @@ import usePermissionStore from '@/stores/permission'
 
 NProgress.configure({ showSpinner: false })
 
+/* Define routes accessible by unauthenticated
+ * app users.
+ */
+
+const whiteList = ['/login', 'auth-redirect', '/mfa']
+
 // "async" is optional;
 // more info on params: https://v2.quasar.dev/quasar-cli/boot-files
 export default boot(async ({ router }) => {
-  /* Define routes accessible by unauthenticated
-   * app users.
-   */
-
-  const whiteList = ['/login', 'auth-redirect', '/mfa', '/password-reset']
-
   /**
    * Callback function to pass on beforeGuard hook.
    */
@@ -29,10 +29,7 @@ export default boot(async ({ router }) => {
     _: RouteLocationNormalized,
     next: NavigationGuardNext
   ) {
-    /**
-     * The target route in the link
-     */
-
+    const lastPath = getLastPath()?.toString()
     const { path: targetPath } = to
 
     /**
@@ -53,7 +50,7 @@ export default boot(async ({ router }) => {
 
     const { token } = userStore
 
-    if (!token) userStore.SetToken(getToken())
+    if (!token) userStore.token = getToken(Token.access)
 
     // Start the progress bar
     NProgress.start()
@@ -61,7 +58,7 @@ export default boot(async ({ router }) => {
     if (token) {
       if (targetPath === '/login') {
         // If is logged in, redirect to the home page
-        next({ path: '/' })
+        next({ path: lastPath ?? '/' })
         NProgress.done()
       } else {
         // Check whether the user has obtained his permission roles
@@ -78,8 +75,7 @@ export default boot(async ({ router }) => {
 
             // Hack: ensure addRoutes is complete
             // Set the replace: true, so the navigation will not leave a history record
-            // next({ ...to, replace: true })
-            next(`${to.redirectedFrom?.fullPath}`)
+            next({ ...to, replace: true })
           } catch (err) {
             userStore.ResetToken()
             next(`/login?redirect=${targetPath}`)
@@ -113,8 +109,9 @@ export default boot(async ({ router }) => {
    * set the app title.
    */
 
-  router.afterEach(async (to: RouteLocationNormalized) => {
-    const { name } = to
+  router.afterEach((to: RouteLocationNormalized) => {
+    const { name, path } = to
+    document.title = ''
 
     // Finish progress bar
     // hack: https://github.com/PanJiaChen/vue-element-admin/pull/2939
@@ -122,7 +119,9 @@ export default boot(async ({ router }) => {
 
     // set page title.
     const title = 'App'
-    if (name) document.title = `${name?.toString()} - ${title}`
-    else document.title = title
+    document.title = `${name?.toString()} - ${title}`
+
+    if (name !== 'NotFound')
+      setLastPath(path)
   })
 })
