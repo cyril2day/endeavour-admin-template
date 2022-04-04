@@ -1,0 +1,22 @@
+name: "Build Test"
+on:
+  push
+
+jobs:
+  build_test:
+    name: build
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: [14, 16]
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2.1.1
+      - name: node
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node }}
+      - name: "install"
+        run: yarn install
+      - name: "build"
+        run: yarn build
