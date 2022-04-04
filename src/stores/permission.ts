@@ -1,6 +1,7 @@
 import { asyncRoutes, constantRoutes } from '@/router/routes'
 import { RouteRecordNormalized, RouteRecordRaw } from 'vue-router'
 import pinia from '@/stores/index'
+import User from '@/types/user'
 
 /**
  * TYPES
@@ -17,11 +18,14 @@ export interface IPermissionState {
   dynamicRoutes: RouteRecordRaw[]
 }
 
-const hasPermission = (roles: string[], route: IRouteRecordNormalized) => {
+const hasPermission = (
+  roles: User.Permission['roles'],
+  route: IRouteRecordNormalized
+) => {
   if (route.meta) {
     return roles.some((role) => {
       if (route.meta.roles) {
-        return route.meta.roles.includes(role)
+        return route.meta.roles.includes(role.slug)
       }
     })
   } else {
@@ -31,7 +35,7 @@ const hasPermission = (roles: string[], route: IRouteRecordNormalized) => {
 
 export const filterAsyncRoutes = (
   routes: RouteRecordRaw[],
-  roles: string[]
+  roles: User.Permission['roles']
 ) => {
   const res: RouteRecordRaw[] = []
   /* eslint-disable-next-line */
@@ -56,15 +60,17 @@ const state: IPermissionState = {
   dynamicRoutes: [],
 }
 
-const GenerateRoutes = async (roles: string[]) => {
+const GenerateRoutes = async (roles: User.Permission['roles']) => {
   /* eslint-disable-next-line */
   let accessedRoutes: any
 
-  if (roles.includes('administrator')) {
-    accessedRoutes = asyncRoutes
-  } else {
-    accessedRoutes = filterAsyncRoutes(asyncRoutes, roles)
-  }
+  roles.forEach((role) => {
+    if (role.slug === 'administrator') {
+      accessedRoutes = asyncRoutes
+    } else {
+      accessedRoutes = filterAsyncRoutes(asyncRoutes, roles)
+    }
+  })
 
   store.routes = constantRoutes.concat(accessedRoutes)
   store.dynamicRoutes = accessedRoutes

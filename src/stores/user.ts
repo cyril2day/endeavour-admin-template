@@ -4,7 +4,6 @@ import { defineStore } from 'pinia'
 import pinia from '@/stores/index'
 import User from '@/types/user'
 
-
 /**
  * Parameter types for user login
  *
@@ -20,12 +19,10 @@ type UserToken = {
  * The user store state types
  *
  */
-type UserStoreState = 
-  UserToken &
+type UserStoreState = UserToken &
   Pick<User.Bio, 'id' | 'first_name' | 'last_name' | 'email' | 'phone_number'> &
   Pick<User.Account, 'username' | 'authy_verified' | 'default_auth_factor'> &
   User.Permission
-
 
 /**
  * The user store state properties
@@ -44,7 +41,6 @@ const state: UserStoreState = {
   default_auth_factor: 'sms',
   roles: [],
 }
-
 
 /**
  * Performs login POST request to the server. If user is
@@ -100,20 +96,18 @@ const GetUserInfo = async () => {
     phone_number,
     authy_verified,
     default_auth_factor,
+    roles,
   } = data.data
   /* eslint-disable-next-line */
-  const roles = data.data.roles as any[]
 
   if (!roles) throw Error('GetUserInfo: roles must be a non-null array!')
-  roles.forEach((role) => {
-    store.roles.push(role.slug)
-  })
 
   store.id = id
   store.username = username
   store.first_name = first_name
   store.last_name = last_name
   store.email = email
+  store.roles = roles
   store.phone_number = phone_number
   store.authy_verified = authy_verified
   store.default_auth_factor = default_auth_factor
@@ -124,13 +118,13 @@ const GetUserInfo = async () => {
  * token and roles.
  */
 
-const ResetToken = async () => {
+const ResetToken = () => {
   store.token = ''
   store.roles = []
   removeToken(Token.access)
 }
 
-const SetToken = async (token: string) => {
+const SetToken = (token: string) => {
   store.token = token
 }
 
