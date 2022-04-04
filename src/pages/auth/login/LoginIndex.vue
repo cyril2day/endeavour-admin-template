@@ -179,7 +179,8 @@ watch(
       />
 
       <div class="login__forgot-pass">
-        <router-link to="/password-reset" class="text-dark"
+        <!-- <router-link to="/password-reset" class="text-dark" -->
+        <router-link to="/login" class="text-dark"
           >Forgot Password?</router-link
         >
       </div>
