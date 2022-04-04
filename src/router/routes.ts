@@ -41,6 +41,27 @@ export const constantRoutes: RouteRecordRaw[] = [
       },
     ],
   },
+
+  {
+    path: '/settings',
+    component: markRaw(Layout),
+    redirect: '/settings/index',
+    name: 'Settings',
+    meta: {
+      hidden: true,
+    },
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/pages/settings/AccountSettings.vue'),
+        name: 'Account Settings',
+        meta: {
+          title: 'settings',
+          icon: 'user',
+        },
+      },
+    ],
+  },
 ]
 
 /**
@@ -63,7 +84,7 @@ export const asyncRoutes: RouteRecordRaw[] = [
       {
         path: 'index',
         component: () => import('pages/user/UserIndex.vue'),
-        name: 'User',
+        name: 'User Index',
         meta: {
           title: 'View User List',
           icon: 'user',
