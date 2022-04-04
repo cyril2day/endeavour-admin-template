@@ -18,8 +18,8 @@ export enum Token {
  */
 
 export const getToken = (tokenType = Token.access): string => {
-  if (Platform.is !== undefined && Platform.is.desktop) {
-    return Cookies.get(tokenType)
+  if (Platform.is !== undefined && (Platform.is.desktop || Platform.is.electron)) {
+    return Cookies.get(tokenType) || ''
   } else {
     return LocalStorage.getItem(tokenType) || ''
   }
@@ -31,8 +31,8 @@ export const getToken = (tokenType = Token.access): string => {
  */
 
 export const setToken = (tokenType: string, value: string) => {
-  return Platform.is !== undefined && Platform.is.desktop
-    ? Cookies.set(tokenType, value, { secure: true })
+  return (Platform.is !== undefined && (Platform.is.desktop || Platform.is.electron))
+    ? Cookies.set(tokenType, value, { secure: true, path: '/' })
     : LocalStorage.set(tokenType, value)
 }
 
@@ -40,7 +40,19 @@ export const setToken = (tokenType: string, value: string) => {
  *  the device type.
  */
 
-export const removeToken = (tokenType = Token.access) => {
-  Cookies.remove(tokenType)
+export const removeToken = (tokenType = 'access_token') => {
+  Cookies.remove(tokenType, { path: '/' })
   LocalStorage.remove(tokenType)
+}
+
+export const setLastPath = (path: string) => {
+  LocalStorage.set('last_path', path === '/login' ? '' : path)
+}
+
+export const getLastPath = () => {
+  return LocalStorage.getItem('last_path')
+}
+
+export const removeLastPath = () => {
+  LocalStorage.remove('last_path')
 }
