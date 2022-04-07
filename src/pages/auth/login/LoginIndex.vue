@@ -3,6 +3,8 @@ import useUserStore from '@/stores/user'
 import { getToken, Token } from '@/utils/storage'
 import { QBtn, QInput } from 'quasar'
 import { useRouter } from 'vue-router'
+import { useMediaQuery } from '@vueuse/core'
+
 
 /**
  * The router and user store intances
@@ -25,6 +27,7 @@ const submitBtn = ref<QBtn | null>(null)
 const submitBtnLoading = ref(false)
 const showPwd = ref(false)
 const loginPassword = ref<QInput | null>(null)
+const isMediumScreen = useMediaQuery('(min-width: 1024px)')
 
 /**
  * Watch for the login token stored in the
@@ -166,23 +169,39 @@ watch(
       </div>
     </q-card-section>
     <q-card-actions class="login__actions">
-      <q-btn
-        ref="submitBtn"
-        label="Proceed"
-        type="submit"
-        color="blue-grey-7"
-        class="login__actions--submit q-mx-lg q-my-md"
-        :loading="submitBtnLoading"
-        :disable="submitBtnLoading"
-        icon-right="arrow_right_alt"
-        @click="submit"
-      />
-
-      <div class="login__forgot-pass">
+      <div class="col-xs-12 login__forgot-pass">
         <!-- <router-link to="/password-reset" class="text-dark" -->
-        <router-link to="/login" class="text-dark"
-          >Forgot Password?</router-link
+        <router-link to="/login" class="text-dark">Forgot Password?</router-link>
+      </div>
+
+      <div class='row' style='margin: 30px 0'>
+        <p>
+          Not your computer? Use Guest mode to sign in privately. 
+          <a href='#' style='text-decoration: none; color: #33474f;'> Learn more</a>
+        </p>
+      </div>
+
+      <div class='col-xs-12 row justify-between'>
+        <div
+          class='col-xs-12 col-md-4 row items-center login__create-account'
+          :class="isMediumScreen ? '' : 'order-last'"
+          :style="isMediumScreen ? '' : 'margin-top: 30px;'"
         >
+          <router-link to="/register" class="text-dark">Create account</router-link>
+        </div>
+        <div class='col-xs-12 col-md-5 row'>
+          <q-btn
+            ref="submitBtn"
+            label="Proceed"
+            type="submit"
+            color="blue-grey-7"
+            class="login__actions--submit q-mx-lg q-my-md"
+            :loading="submitBtnLoading"
+            :disable="submitBtnLoading"
+            icon-right="arrow_right_alt"
+            @click="submit"
+          />
+        </div>
       </div>
     </q-card-actions>
   </q-card>
@@ -196,12 +215,18 @@ watch(
   margin: 160px auto;
 }
 
-.login__actions--submit {
-  width: 100%;
-}
-
 .login__section {
   padding-bottom: 0 !important;
+}
+
+.login__actions {
+  margin: 20px auto;
+}
+
+.login__actions--submit {
+  width: 100%;
+  margin: 0;
+  padding: 0;
 }
 
 .login__feedback {
@@ -213,7 +238,11 @@ watch(
 }
 
 .login__forgot-pass {
-  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.login__forgot-pass,
+.login__create-account{
   a {
     text-decoration: none;
 
