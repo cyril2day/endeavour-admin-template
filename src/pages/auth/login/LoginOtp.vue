@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { validateCode } from '@/api/users'
 import useUserStore from '@/stores/user'
-import { removeToken, setToken, Token } from '@/utils/storage'
+import { getToken, removeToken, setToken, Token } from '@/utils/storage'
 import { useRouter } from 'vue-router'
 
 /**
@@ -84,13 +84,18 @@ const clearFeedback = () => {
  */
 
 onBeforeMount(() => {
-  userStore.SetToken(props.token)
   /**
    * Do not render the OTP form unless token
    * prop is passed a value. Falls back to
    * the login page.
    */
-  if (!props.token) router.push('/login')
+  if (!props.token) {
+    router.push('/login')
+  } else {
+    // hydrate modified token from mfa props
+    userStore.SetToken((props.token ?? `${getToken()}`))
+  }
+
 })
 </script>
 
