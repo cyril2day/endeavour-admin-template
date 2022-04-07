@@ -1,5 +1,5 @@
 import { getUserInfo, login } from '@/api/users'
-import { removeToken, setToken, Token } from '@/utils/storage'
+import { getToken, removeToken, setToken, Token } from '@/utils/storage'
 import { defineStore } from 'pinia'
 import pinia from '@/stores/index'
 import User from '@/types/user'
@@ -30,7 +30,7 @@ type UserStoreState = UserToken &
  */
 
 const state: UserStoreState = {
-  token: '',
+  token: `${getToken()}` || '',
   id: 0,
   username: '',
   first_name: '',
