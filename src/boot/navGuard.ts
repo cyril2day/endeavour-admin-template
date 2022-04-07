@@ -16,8 +16,14 @@ NProgress.configure({ showSpinner: false })
  * app users.
  */
 
-const whiteList = ['/login', 'auth-redirect', '/mfa', 'register']
+const whiteList = ['/login', 'auth-redirect', '/mfa', '/register']
 
+
+/**
+ * Restrict access to these route if logged in.
+ */
+
+const restrictedRoutesIfLogged = ['/login', '/register']
 
 /**
  * Instantiate user store
@@ -56,12 +62,17 @@ async function beforeGuard(
 
   const { token } = userStore
 
-  // Start the progress bar
+  /** Start the progress bar
+   *
+   */
   NProgress.start()
 
   if (token) {
-    if (targetPath === '/login') {
-      // If is logged in, redirect to the home page
+    
+    if (restrictedRoutesIfLogged.includes(targetPath)) {
+
+      // if visiting restricted routes while logged in,
+      // redirect to the home page
       next({ path: '/' })
       NProgress.done()
     } else {
