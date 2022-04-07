@@ -7,6 +7,10 @@
 }
 
 #nprogress {
+  position: absolute;
+  top: 0;
+  height: 3px;
+  z-index: 9999;
   .bar {
     background: $dark !important;
   }
