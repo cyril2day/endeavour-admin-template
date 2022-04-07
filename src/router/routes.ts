@@ -14,6 +14,12 @@ export const constantRoutes: RouteRecordRaw[] = [
   },
 
   {
+    path: '/register',
+    component: () => import('pages/auth/register/RegisterIndex.vue'),
+    name: 'Register',
+  },
+
+  {
     path: '/mfa',
     component: () => import('pages/auth/login/LoginOtp.vue'),
     name: 'Mfa',
