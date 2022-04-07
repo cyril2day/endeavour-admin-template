@@ -26,7 +26,8 @@ const fetchTable = async () => {
     if (data && data.data instanceof Array) {
       /* eslint-disable-next-line */
       data.data.forEach((d: any) => {
-        const { email, roles, username, first_name, last_name } = d.attributes
+        const { email, username, first_name, last_name } = d.attributes
+        const { roles } = d.relationships
 
         rows.value.push({
           id: parseInt(d.id),
