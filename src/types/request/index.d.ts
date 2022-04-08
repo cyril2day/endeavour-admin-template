@@ -18,7 +18,7 @@ type UserData = User.Bio &
  * TODO: refine this
  */
 
-type RoleData = Object
+type RoleData = unknown
 
 
 /**
