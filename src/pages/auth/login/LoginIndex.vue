@@ -4,6 +4,7 @@ import { getToken, Token } from '@/utils/storage'
 import { QBtn, QInput } from 'quasar'
 import { useRouter } from 'vue-router'
 import { useMediaQuery } from '@vueuse/core'
+import { LoginData } from '@/types/request'
 
 
 /**
@@ -34,15 +35,13 @@ const isMediumScreen = useMediaQuery('(min-width: 1024px)')
  * app device.
  */
 
-const loginToken = computed(() => getToken(Token.login) as string)
+const loginToken = computed(() => `${getToken(Token.login)}`)
 
 /**
  * Clears the form feedback paragraph.
  */
 
-const clearFeedback = () => {
-  feedback.value = ''
-}
+const clearFeedback = () => feedback.value = ''
 
 /**
  * Handle user login into the app. Determines
@@ -53,41 +52,33 @@ const clearFeedback = () => {
 const submit = async () => {
   submitBtnLoading.value = true
 
-  try {
-    const { data } = await userStore.Login({
-      username: login.value.username,
-      password: login.value.password,
-    })
+  const result = await userStore.Login(login.value)
 
-    if (data.status_code === 401) throw Error(data.errors.message[0])
+  if (result.state === 'ok') { 
+    const { token, verify } = result.data as LoginData
 
-    if (data.status === 'error') throw Error(data.message)
-
-    if (data.data.verify)
+    if (verify)
       /**
        * If user has enabled MFA, present the OTP form
        * before accessing the dashboard. OTP form requires
        * to be passed a token prop.
        */
-
-      router.push({ name: 'Mfa', params: { token: data.token } })
-    /**
-     * else dashboard is accessible, no mfa is set
-     */ else router.push('/')
-  } catch (error) {
-    /**
-     * Handle err. Need to type check
-     * as error is of type unknown in TS.
-     */
-
-    if (error instanceof Error) feedback.value = error.message
-  } finally {
-    /**
-     * Enable submit after requests are handled
-     */
-
-    submitBtnLoading.value = false
+      router.push({ name: 'Mfa', params: { token: token } })
+    else
+      /**
+       * else dashboard is accessible, no mfa is set
+       */ 
+      router.push('/')
   }
+  else {
+    feedback.value = result.message
+  }
+
+  /**
+   * Enable submit after requests are handled
+   */
+
+  submitBtnLoading.value = false
 }
 
 /**
@@ -95,7 +86,7 @@ const submit = async () => {
  * https://vuejs.org/guide/essentials/lifecycle.html
  */
 
-onBeforeMount(async () => {
+onBeforeMount(() => {
   /**
    * If user login token is already set, then
    * proceed to OTP form.
@@ -161,13 +152,14 @@ watch(
       </q-form>
 
       <div
-        :visibility="feedback ? 'visible' : 'none'"
+        v-if='feedback'
         class="login__feedback text-caption text-weight-light"
       >
-        <q-icon v-show="feedback" name="warning_amber" class="q-pr-md" />
+        <q-icon name="warning_amber" class="q-pr-md" />
         {{ feedback }}
       </div>
     </q-card-section>
+
     <q-card-actions class="login__actions">
       <div class="col-xs-12 login__forgot-pass">
         <!-- <router-link to="/password-reset" class="text-dark" -->
