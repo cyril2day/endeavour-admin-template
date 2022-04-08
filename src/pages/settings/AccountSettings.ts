@@ -3,9 +3,12 @@ import { useWindowSize } from '@vueuse/core'
 import User from '@/types/user'
 import Request from '@/types/request'
 import { updateUser, changeUserPassword } from '@/api/users'
-import { AxiosResponse } from 'axios'
+import { GetNormalizedRequestState } from '@/utils/state'
 
 
+/**
+ * Local Types
+ */
 type User = Pick<User.Bio, 'id' | 'first_name' | 'last_name' | 'email' | 'phone_number'> &
   Pick<User.Account, 'username'>
 
@@ -23,6 +26,9 @@ type HandleAccountPasswordChange = (
   payload: ChangeUserPasswordPayload,
 ) => Promise<Request.Success | Request.Error>
 
+/**
+ * Local mixins
+ */
 export const LEFT_DRAWER_WIDTH = 299
 export const LEFT_DRAWER_BREAKPOINT = 1023
 
@@ -37,45 +43,33 @@ export const pageContainerWidth = computed(
   () => width.value - leftDrawerWidth.value
 )
 
-export const handleAccountUpdate: HandleAccountUpdate = async (user) => {
-  const requestState = {} as Request.Success | Request.Error
-
-  try {
-    const { data } = await updateUser(user.id, { ...user })
-    Object.assign(requestState, {
-      state: 'ok',
-      message: 'User Updated',
-      data: data.data,
-    })
-  } catch(error) {
-    const err = error as AxiosResponse
-    Object.assign(requestState, {
-      state: 'error',
-      message: err.data.message,
-      data: err.data.data,
-    })
+/**
+ * Handles user account update
+ *
+ * @params user user bio and account object
+ * @returns normalized success or error state
+ */
+export const handleAccountUpdate: HandleAccountUpdate = 
+  async (user) => {
+    return await GetNormalizedRequestState(
+      updateUser,
+      {id: user.id, data: {...user}},
+      'User Updated'
+    )
   }
-  return requestState
-}
 
+/**
+ * Handles user password change for logged-in users.
+ *
+ * @param payload - user's current and newly entered password,
+ * including the password confirmation.
+ * @returns normalized success or error state
+ */
 export const handleAccountPasswordChange: HandleAccountPasswordChange = 
   async (payload: ChangeUserPasswordPayload) => {
-    const requestState = {} as Request.Success | Request.Error
-
-    try {
-      const { data } = await changeUserPassword(payload)
-      Object.assign(requestState, {
-        state: 'ok',
-        message: 'Password Updated',
-        data: data.data,
-      })
-    } catch(error) {
-      const err = error as AxiosResponse
-      Object.assign(requestState, {
-        state: 'error',
-        message: err.data.message,
-        data: err.data.data,
-      })
-    }
-    return requestState
-}
+   return await GetNormalizedRequestState(
+     changeUserPassword,
+     payload,
+     'Password Updated'
+   )
+  }

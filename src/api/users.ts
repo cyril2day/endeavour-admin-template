@@ -1,12 +1,15 @@
+/* eslint-disable */
 import { api as request } from 'boot/axios'
+
+
+/*
+type ValidateCodeParams = {
+  code: string
+}
 
 type LoginParams = {
   username: string
   password: string
-}
-
-type ValidateCodeParams = {
-  code: string
 }
 
 type ChangeUserPasswordParams = {
@@ -14,8 +17,9 @@ type ChangeUserPasswordParams = {
   password_current: string
   password_confirmation: string
 }
+*/
 
-export const login = (params: LoginParams) =>
+export const login = (params: any) =>
   request({
     url: '/auth/login',
     method: 'post',
@@ -28,14 +32,13 @@ export const getUserInfo = () =>
     method: 'get',
   })
 
-export const validateCode = (params: ValidateCodeParams) =>
+export const validateCode = (params: any) =>
   request({
     url: '/auth/mfa/verify',
     method: 'post',
     data: params,
   })
 
-/* eslint-disable-next-line */
 export const getUsers = (params: any) =>
   request({
     url: '/user',
@@ -49,7 +52,6 @@ export const getUserById = (id: string) =>
     method: 'get',
   })
 
-/* eslint-disable-next-line */
 export const createUser = (params: any) =>
   request({
     url: '/user',
@@ -57,12 +59,11 @@ export const createUser = (params: any) =>
     data: params,
   })
 
-/* eslint-disable-next-line */
-export const updateUser = (id: number, params: any) =>
+export const updateUser = (params: any) =>
   request({
-    url: `/user/${id}`,
+    url: `/user/${params.id}`,
     method: 'put',
-    data: params,
+    data: params.data,
   })
 
 export const deleteUser = (id: number) =>
@@ -71,7 +72,7 @@ export const deleteUser = (id: number) =>
     method: 'delete',
   })
 
-export const changeUserPassword = (params: ChangeUserPasswordParams) => 
+export const changeUserPassword = (params: any) => 
   request({
     url: '/user/change',
     method: 'post',

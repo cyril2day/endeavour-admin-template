@@ -4,7 +4,6 @@ import { getToken, Token } from '@/utils/storage'
 import { QBtn, QInput } from 'quasar'
 import { useRouter } from 'vue-router'
 import { useMediaQuery } from '@vueuse/core'
-import { LoginData } from '@/types/request'
 
 
 /**
@@ -23,6 +22,7 @@ const login = ref({
   username: '',
   password: '',
 })
+
 const feedback = ref('')
 const submitBtn = ref<QBtn | null>(null)
 const submitBtnLoading = ref(false)
@@ -54,8 +54,8 @@ const submit = async () => {
 
   const result = await userStore.Login(login.value)
 
-  if (result.state === 'ok') { 
-    const { token, verify } = result.data as LoginData
+  if (result.state === 'ok' && 'token' in result.data) { 
+    const { token, verify } = result.data
 
     if (verify)
       /**
