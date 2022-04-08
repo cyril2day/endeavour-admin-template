@@ -8,7 +8,14 @@ type UserData = User.Bio &
 
 type RoleData = Object
 
-type RequestSuccessData = UserData | RoleData
+export type LoginData = {
+  mfa_verified: boolean
+  otp_sent_to: string
+  token: string
+  verify: boolean
+}
+
+type RequestSuccessData = UserData | RoleData | LoginData
 
 type RequestErrorData = {
   [field: string]: string[]
