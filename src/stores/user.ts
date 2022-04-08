@@ -3,6 +3,8 @@ import { getToken, removeToken, setToken, Token } from '@/utils/storage'
 import { defineStore } from 'pinia'
 import pinia from '@/stores/index'
 import User from '@/types/user'
+import Request, { LoginData } from '@/types/request'
+import { AxiosResponse } from 'axios'
 
 /**
  * Parameter types for user login
@@ -52,29 +54,40 @@ const state: UserStoreState = {
  */
 
 const Login = async (params: ParamLogin) => {
-  const { username, password } = params
-  const result = await login({ username, password })
-    .then((response) => {
-      const token = response.data.data.token
+  const requestState = {} as Request.Success | Request.Error
 
-      // determine type of token to set
-      if (response.data.data.verify) {
-        // set token type to type `login` if user
-        // is mfa verifed
-        setToken(Token.login, token)
-      } else {
-        // set to type `access` otherwise
-        setToken(Token.access, token)
-      }
-
-      // set store token
-      store.token = token
-
-      return response
+  try {
+    const { data } = await login(params)
+    Object.assign(requestState, {
+      state: 'ok',
+      message: 'User Login Success',
+      data: data.data,
     })
-    .catch((err) => err)
+  } catch(error) {
+    const err = error as AxiosResponse
+    Object.assign(requestState, {
+      state: 'error',
+      message: err.data.message,
+      data: err.data.data,
+    })
+  }
 
-  return result
+  if (requestState.state === 'ok') {
+    const { token, verify } = requestState.data as LoginData
+
+    if (verify) {
+      // set token type to type `login` if user
+      // is mfa verifed
+      setToken(Token.login, token)
+    } else {
+      // set to type `access` otherwise
+      setToken(Token.access, token)
+    }
+
+    store.token = token
+  } 
+
+  return requestState
 }
 
 /**
