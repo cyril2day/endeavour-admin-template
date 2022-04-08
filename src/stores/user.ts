@@ -3,8 +3,8 @@ import { getToken, removeToken, setToken, Token } from '@/utils/storage'
 import { defineStore } from 'pinia'
 import pinia from '@/stores/index'
 import User from '@/types/user'
-import Request, { LoginData } from '@/types/request'
-import { AxiosResponse } from 'axios'
+import { GetNormalizedRequestState } from '@/utils/state'
+
 
 /**
  * Parameter types for user login
@@ -50,30 +50,18 @@ const state: UserStoreState = {
  * `access_token`, otherwise it'll be `login_token`.
  *
  * @param params object containing username and password.
- * @returns response or error data
+ * @returns normalized success or error state.
  */
 
 const Login = async (params: ParamLogin) => {
-  const requestState = {} as Request.Success | Request.Error
+  const loginRequest = await GetNormalizedRequestState(
+    login,
+    params,
+    'User Login Success'
+  )
 
-  try {
-    const { data } = await login(params)
-    Object.assign(requestState, {
-      state: 'ok',
-      message: 'User Login Success',
-      data: data.data,
-    })
-  } catch(error) {
-    const err = error as AxiosResponse
-    Object.assign(requestState, {
-      state: 'error',
-      message: err.data.message,
-      data: err.data.data,
-    })
-  }
-
-  if (requestState.state === 'ok') {
-    const { token, verify } = requestState.data as LoginData
+  if (loginRequest.state === 'ok' && 'token' in loginRequest.data) {
+    const { token, verify } = loginRequest.data
 
     if (verify) {
       // set token type to type `login` if user
@@ -87,7 +75,7 @@ const Login = async (params: ParamLogin) => {
     store.token = token
   } 
 
-  return requestState
+  return loginRequest
 }
 
 /**
