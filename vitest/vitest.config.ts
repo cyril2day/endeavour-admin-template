@@ -3,9 +3,12 @@
 import { defineConfig, configDefaults } from 'vitest/config'
 import vue from '@vitejs/plugin-vue'
 import AutoImport from 'unplugin-auto-import/vite'
-import path from 'path'
+import { resolve } from 'path'
+
+const root = resolve(__dirname, '../')
 
 export default defineConfig({
+  root,
   mode: 'test',
   plugins: [
     vue(),
@@ -16,15 +19,16 @@ export default defineConfig({
   ],
   resolve: {
     alias: {
-      '@': path.join(__dirname, '../src'),
-      app: path.join(__dirname, '..'),
-      src: path.join(__dirname, '../src'),
-      components: path.join(__dirname, '../src/components'),
-      css: path.join(__dirname, '../css'),
-      layouts: path.join(__dirname, '../src/layouts'),
-      pages: path.join(__dirname, '../src/pages'),
-      router: path.join(__dirname, '../src/router'),
-      stores: path.join(__dirname, '../src/stores'),
+      '@': resolve(root, 'src'),
+      app: resolve(root, '.'),
+      boot: resolve(root, 'src/boot'),
+      src: resolve(root, 'src'),
+      css: resolve(root, 'src/css'),
+      pages: resolve(root, 'src/pages'),
+      components: resolve(root, 'src/components'),
+      layouts: resolve(root, 'src/layouts'),
+      assets: resolve(root, 'src/assets'),
+      stores: resolve(root, 'src/stores'),
     },
   },
   test: {
