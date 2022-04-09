@@ -1,8 +1,7 @@
-<script setup lang='ts'>
+<script setup lang="ts">
 import { useQuasar } from 'quasar'
-import { QInput } from 'quasar';
-import { handleAccountPasswordChange } from '../AccountSettings';
-
+import { QInput } from 'quasar'
+import { handleAccountPasswordChange } from '../AccountSettings'
 
 const verified = ref(false)
 const verifyPasswordLoading = ref(false)
@@ -27,10 +26,10 @@ const validateCurrentPassword = (pass: string) => {
 
 const updatePassword = async () => {
   feedbacks.value = []
-  const payload = { 
+  const payload = {
     password: password.value.new,
     password_current: password.value.current,
-    password_confirmation: password.value.confirm
+    password_confirmation: password.value.confirm,
   }
   const result = await handleAccountPasswordChange(payload)
 
@@ -68,36 +67,38 @@ watch(
 </script>
 
 <template>
-  <div class='account__password'>
-    <div v-if='!verified'>
-      <p class='text-body2'>Password change needs verification. Click below to continue</p>
+  <div class="account__password">
+    <div v-if="!verified">
+      <p class="text-body2">
+        Password change needs verification. Click below to continue
+      </p>
 
-      <q-btn label='Change Password'>
+      <q-btn label="Change Password">
         <q-popup-edit
           v-model="password.current"
           auto-save
-          :validate='validateCurrentPassword'
-          :save='validateCurrentPassword'
+          :validate="validateCurrentPassword"
+          :save="validateCurrentPassword"
         >
-          <template v-slot='scope'>
+          <template v-slot="scope">
             <q-input
               autofocus
               counter
               dense
-              type='password'
+              type="password"
               v-model="scope.value"
-              hint='Your current password'
+              hint="Your current password"
               @keyup.enter="scope.set"
             >
               <template #append>
                 <q-btn
                   flat
                   dense
-                  size='sm'
-                  color='primary'
-                  icon='arrow_forward_ios'
-                  :loading='verifyPasswordLoading'
-                  @click='scope.set'
+                  size="sm"
+                  color="primary"
+                  icon="arrow_forward_ios"
+                  :loading="verifyPasswordLoading"
+                  @click="scope.set"
                 />
               </template>
             </q-input>
@@ -106,56 +107,57 @@ watch(
       </q-btn>
     </div>
     <div v-else>
-      <p class='text-body2'>
-        <q-icon name='check_circle' color='secondary' />
-        It's a good idea to use a strong password that you're not using elsewhere
+      <p class="text-body2">
+        <q-icon name="check_circle" color="secondary" />
+        It's a good idea to use a strong password that you're not using
+        elsewhere
       </p>
       <q-input
-        type='password'
-        :readonly='true'
-        v-model='password.current'
-        label='Current Password'
+        type="password"
+        :readonly="true"
+        v-model="password.current"
+        label="Current Password"
       />
     </div>
   </div>
   <q-separator />
   <q-form
     dense
-    :disable='!verified'
-    class='account__password-form'
+    :disable="!verified"
+    class="account__password-form"
     @submit.prevent
-    @keyup.enter='updatePassword'
+    @keyup.enter="updatePassword"
   >
     <q-input
-      ref='newPwd'
-      :disable='!verified'
+      ref="newPwd"
+      :disable="!verified"
       :type="newPwdVisible ? 'text' : 'password'"
-      v-model='password.new'
-      label='New Password'
+      v-model="password.new"
+      label="New Password"
     >
       <template #append>
         <q-icon
           :name="newPwdVisible ? 'visibility' : 'visibility_off'"
-          @click='newPwdVisible = !newPwdVisible'
-          style='cursor: pointer'
+          @click="newPwdVisible = !newPwdVisible"
+          style="cursor: pointer"
         />
       </template>
     </q-input>
     <q-input
-      :disable='!verified'
+      :disable="!verified"
       :type="confirmPwdVisible ? 'text' : 'password'"
-      v-model='password.confirm'
-      label='Confirm Password'
+      v-model="password.confirm"
+      label="Confirm Password"
     >
       <template #append>
         <q-icon
           :name="confirmPwdVisible ? 'visibility' : 'visibility_off'"
-          @click='confirmPwdVisible = !confirmPwdVisible'
-          style='cursor: pointer'
+          @click="confirmPwdVisible = !confirmPwdVisible"
+          style="cursor: pointer"
         />
       </template>
     </q-input>
-  </q-form>        
+  </q-form>
 
   <div
     v-if="feedbacks.length"
@@ -179,19 +181,18 @@ watch(
     </q-list>
   </div>
 
-
-
   <q-btn
-    v-if='verified'
-    class='account__update-password-btn'
-    label='Update Password'
-    color='primary'
-    @click='updatePassword'
+    v-if="verified"
+    class="account__update-password-btn"
+    label="Update Password"
+    color="primary"
+    @click="updatePassword"
   ></q-btn>
 </template>
 
 <style lang="scss">
-.account__password, .account__password-form {
+.account__password,
+.account__password-form {
   margin: 10px auto;
   min-height: 120px;
 }

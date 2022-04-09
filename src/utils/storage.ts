@@ -18,7 +18,10 @@ export enum Token {
  */
 
 export const getToken = (tokenType = Token.access): string => {
-  if (Platform.is !== undefined && (Platform.is.desktop || Platform.is.electron)) {
+  if (
+    Platform.is !== undefined &&
+    (Platform.is.desktop || Platform.is.electron)
+  ) {
     return Cookies.get(tokenType) || ''
   } else {
     return LocalStorage.getItem(tokenType) || ''
@@ -31,7 +34,8 @@ export const getToken = (tokenType = Token.access): string => {
  */
 
 export const setToken = (tokenType: string, value: string) => {
-  return (Platform.is !== undefined && (Platform.is.desktop || Platform.is.electron))
+  return Platform.is !== undefined &&
+    (Platform.is.desktop || Platform.is.electron)
     ? Cookies.set(tokenType, value, { secure: true, path: '/' })
     : LocalStorage.set(tokenType, value)
 }

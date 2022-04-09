@@ -2,7 +2,7 @@
 import { useQuasar } from 'quasar'
 import useUserStore from '@/stores/user'
 import {
-handleAccountUpdate,
+  handleAccountUpdate,
   LEFT_DRAWER_BREAKPOINT,
   pageContainerWidth,
 } from '@/pages/settings/AccountSettings'
@@ -30,8 +30,7 @@ const update = async () => {
     Object.keys(result.data).forEach((key) => {
       feedbacks.value.push(result.data[key][0])
     })
-  }
-  else useUserStore().GetUserInfo()
+  } else useUserStore().GetUserInfo()
 
   q.notify({
     color: result.state === 'ok' ? 'secondary' : 'negative',
@@ -41,7 +40,6 @@ const update = async () => {
     position: 'top',
     timeout: 2500,
   })
-
 }
 
 const toggleResponsiveClass = () => {

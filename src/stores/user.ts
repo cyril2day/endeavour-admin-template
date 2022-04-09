@@ -5,7 +5,6 @@ import pinia from '@/stores/index'
 import User from '@/types/user'
 import { GetNormalizedRequestState } from '@/utils/state'
 
-
 /**
  * Parameter types for user login
  *
@@ -73,7 +72,7 @@ const Login = async (params: ParamLogin) => {
     }
 
     store.token = token
-  } 
+  }
 
   return loginRequest
 }

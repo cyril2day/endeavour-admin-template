@@ -1,19 +1,17 @@
 import Request from '@/types/request'
 import { AxiosPromise, AxiosResponse } from 'axios'
 
-
 /**
  * Generic type for a callback fn.
  * @param params - can be any, see `src/api/users` for reference.
- * @returns AxiosPromise 
+ * @returns AxiosPromise
  */
 
 type CallBackFn = <T>(params: T) => AxiosPromise
 
-
 /**
- * Normalizes success or error state of a 
- * requested resource. 
+ * Normalizes success or error state of a
+ * requested resource.
  *
  * @param callback - the axios request api for
  * a particular resource.
@@ -23,12 +21,13 @@ type CallBackFn = <T>(params: T) => AxiosPromise
  * @returns the normalized request state
  */
 
-export const GetNormalizedRequestState = 
-  async <T = Request.Success | Request.Error>(
-    callback: CallBackFn,
-    params: unknown,
-    message=''
-  ): Promise<T> => {
+export const GetNormalizedRequestState = async <
+  T = Request.Success | Request.Error
+>(
+  callback: CallBackFn,
+  params: unknown,
+  message = ''
+): Promise<T> => {
   const requestState = {} as T
 
   try {
@@ -38,7 +37,7 @@ export const GetNormalizedRequestState =
       message: data.message ?? message,
       data: data.data,
     })
-  } catch(error) {
+  } catch (error) {
     const err = error as AxiosResponse
     Object.assign(requestState, {
       state: 'error',

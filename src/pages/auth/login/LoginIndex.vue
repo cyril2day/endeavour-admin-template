@@ -5,7 +5,6 @@ import { QBtn, QInput } from 'quasar'
 import { useRouter } from 'vue-router'
 import { useMediaQuery } from '@vueuse/core'
 
-
 /**
  * The router and user store intances
  */
@@ -41,7 +40,7 @@ const loginToken = computed(() => `${getToken(Token.login)}`)
  * Clears the form feedback paragraph.
  */
 
-const clearFeedback = () => feedback.value = ''
+const clearFeedback = () => (feedback.value = '')
 
 /**
  * Handle user login into the app. Determines
@@ -54,7 +53,7 @@ const submit = async () => {
 
   const result = await userStore.Login(login.value)
 
-  if (result.state === 'ok' && 'token' in result.data) { 
+  if (result.state === 'ok' && 'token' in result.data) {
     const { token, verify } = result.data
 
     if (verify)
@@ -64,13 +63,10 @@ const submit = async () => {
        * to be passed a token prop.
        */
       router.push({ name: 'Mfa', params: { token: token } })
-    else
-      /**
-       * else dashboard is accessible, no mfa is set
-       */ 
-      router.push('/')
-  }
-  else {
+    /**
+     * else dashboard is accessible, no mfa is set
+     */ else router.push('/')
+  } else {
     feedback.value = result.message
   }
 
@@ -117,6 +113,7 @@ watch(
     <q-card-section class="login__section">
       <q-form class="login__form" @submit.prevent="submit">
         <q-input
+          ref="loginUsername"
           v-model="login.username"
           label="Enter Username"
           lazy-rules
@@ -152,7 +149,7 @@ watch(
       </q-form>
 
       <div
-        v-if='feedback'
+        v-if="feedback"
         class="login__feedback text-caption text-weight-light"
       >
         <q-icon name="warning_amber" class="q-pr-md" />
@@ -163,25 +160,31 @@ watch(
     <q-card-actions class="login__actions">
       <div class="col-xs-12 login__forgot-pass">
         <!-- <router-link to="/password-reset" class="text-dark" -->
-        <router-link to="/login" class="text-dark">Forgot Password?</router-link>
+        <router-link to="/login" class="text-dark"
+          >Forgot Password?</router-link
+        >
       </div>
 
-      <div class='row' style='margin: 30px 0'>
+      <div class="row" style="margin: 30px 0">
         <p>
-          Not your computer? Use Guest mode to sign in privately. 
-          <a href='#' style='text-decoration: none; color: #33474f;'> Learn more</a>
+          Not your computer? Use Guest mode to sign in privately.
+          <a href="#" style="text-decoration: none; color: #33474f">
+            Learn more</a
+          >
         </p>
       </div>
 
-      <div class='col-xs-12 row justify-between'>
+      <div class="col-xs-12 row justify-between">
         <div
-          class='col-xs-12 col-md-4 row items-center login__create-account'
+          class="col-xs-12 col-md-4 row items-center login__create-account"
           :class="isMediumScreen ? '' : 'order-last'"
           :style="isMediumScreen ? '' : 'margin-top: 30px;'"
         >
-          <router-link to="/register" class="text-dark">Create account</router-link>
+          <router-link to="/register" class="text-dark"
+            >Create account</router-link
+          >
         </div>
-        <div class='col-xs-12 col-md-5 row'>
+        <div class="col-xs-12 col-md-5 row">
           <q-btn
             ref="submitBtn"
             label="Proceed"
@@ -234,7 +237,7 @@ watch(
 }
 
 .login__forgot-pass,
-.login__create-account{
+.login__create-account {
   a {
     text-decoration: none;
 

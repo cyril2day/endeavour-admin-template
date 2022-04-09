@@ -2,7 +2,6 @@ import User from '@/types/user'
 
 export as namespace Request
 
-
 /**
  * User info request success data without
  * the password, last_login field
@@ -12,14 +11,12 @@ type UserData = User.Bio &
   Omit<User.Account, 'password' | 'last_login'> &
   User.Permission
 
-
 /**
  * For use in Roles list.
  * TODO: refine this
  */
 
 type RoleData = unknown
-
 
 /**
  * User store login request success data
@@ -36,7 +33,6 @@ type LoginData = {
  */
 
 type RequestSuccessData = UserData | RoleData | LoginData
-
 
 /**
  * Request error data is dynamic, depends on erring fields

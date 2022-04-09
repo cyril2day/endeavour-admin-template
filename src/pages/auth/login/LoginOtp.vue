@@ -93,9 +93,8 @@ onBeforeMount(() => {
     router.push('/login')
   } else {
     // hydrate modified token from mfa props
-    userStore.SetToken((props.token ?? `${getToken()}`))
+    userStore.SetToken(props.token ?? `${getToken()}`)
   }
-
 })
 </script>
 

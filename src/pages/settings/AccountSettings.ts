@@ -5,15 +5,17 @@ import Request from '@/types/request'
 import { updateUser, changeUserPassword } from '@/api/users'
 import { GetNormalizedRequestState } from '@/utils/state'
 
-
 /**
  * Local Types
  */
-type User = Pick<User.Bio, 'id' | 'first_name' | 'last_name' | 'email' | 'phone_number'> &
+type User = Pick<
+  User.Bio,
+  'id' | 'first_name' | 'last_name' | 'email' | 'phone_number'
+> &
   Pick<User.Account, 'username'>
 
 type HandleAccountUpdate = (
-  user: User,
+  user: User
 ) => Promise<Request.Success | Request.Error>
 
 type ChangeUserPasswordPayload = {
@@ -23,7 +25,7 @@ type ChangeUserPasswordPayload = {
 }
 
 type HandleAccountPasswordChange = (
-  payload: ChangeUserPasswordPayload,
+  payload: ChangeUserPasswordPayload
 ) => Promise<Request.Success | Request.Error>
 
 /**
@@ -49,14 +51,13 @@ export const pageContainerWidth = computed(
  * @params user user bio and account object
  * @returns normalized success or error state
  */
-export const handleAccountUpdate: HandleAccountUpdate = 
-  async (user) => {
-    return await GetNormalizedRequestState(
-      updateUser,
-      {id: user.id, data: {...user}},
-      'User Updated'
-    )
-  }
+export const handleAccountUpdate: HandleAccountUpdate = async (user) => {
+  return await GetNormalizedRequestState(
+    updateUser,
+    { id: user.id, data: { ...user } },
+    'User Updated'
+  )
+}
 
 /**
  * Handles user password change for logged-in users.
@@ -65,11 +66,12 @@ export const handleAccountUpdate: HandleAccountUpdate =
  * including the password confirmation.
  * @returns normalized success or error state
  */
-export const handleAccountPasswordChange: HandleAccountPasswordChange = 
-  async (payload: ChangeUserPasswordPayload) => {
-   return await GetNormalizedRequestState(
-     changeUserPassword,
-     payload,
-     'Password Updated'
-   )
-  }
+export const handleAccountPasswordChange: HandleAccountPasswordChange = async (
+  payload: ChangeUserPasswordPayload
+) => {
+  return await GetNormalizedRequestState(
+    changeUserPassword,
+    payload,
+    'Password Updated'
+  )
+}
