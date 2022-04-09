@@ -1,9 +1,12 @@
 import { boot } from 'quasar/wrappers'
 import NProgress from 'nprogress'
-import { NavigationGuardNext, RouteLocationNormalized, Router } from 'vue-router'
+import {
+  NavigationGuardNext,
+  RouteLocationNormalized,
+  Router,
+} from 'vue-router'
 import useUserStore from '@/stores/user'
 import usePermissionStore from '@/stores/permission'
-
 
 /* Turn off loading spinner
  *
@@ -11,13 +14,11 @@ import usePermissionStore from '@/stores/permission'
 
 NProgress.configure({ showSpinner: false })
 
-
 /* Define routes accessible by unauthenticated
  * app users.
  */
 
 const whiteList = ['/login', 'auth-redirect', '/mfa', '/register']
-
 
 /**
  * Restrict access to these route if logged in.
@@ -31,19 +32,16 @@ const restrictedRoutesIfLogged = ['/login', '/register']
 
 const userStore = useUserStore()
 
-
 /**
  * Instantiate permission store
  */
 
 const permissionStore = usePermissionStore()
 
-
 /**
  * The temporary router placeholder
  */
 let Router: Router
-
 
 /**
  * Callback function to pass on beforeGuard hook.
@@ -68,9 +66,7 @@ async function beforeGuard(
   NProgress.start()
 
   if (token) {
-    
     if (restrictedRoutesIfLogged.includes(targetPath)) {
-
       // if visiting restricted routes while logged in,
       // redirect to the home page
       next({ path: '/' })
@@ -113,11 +109,9 @@ async function beforeGuard(
   }
 }
 
-
 // "async" is optional;
 // more info on params: https://v2.quasar.dev/quasar-cli/boot-files
 export default boot(async ({ router }) => {
-
   /**
    * Pass the actual router now initialized.
    * source: https://quasar.dev/quasar-cli-vite/boot-files#quasar-app-flow
@@ -125,16 +119,14 @@ export default boot(async ({ router }) => {
 
   Router = router
 
-
   /**
    * Trigger global beforeEach hook before the actual navigation
    */
 
   router.beforeEach(beforeGuard)
 
-
   /**
-   * In the global afterEach hook, set nprogress to done when 
+   * In the global afterEach hook, set nprogress to done when
    * route is resolved. Also set the app title.
    */
 

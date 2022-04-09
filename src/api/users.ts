@@ -1,7 +1,6 @@
 /* eslint-disable */
 import { api as request } from 'boot/axios'
 
-
 /*
 type ValidateCodeParams = {
   code: string
@@ -72,7 +71,7 @@ export const deleteUser = (id: number) =>
     method: 'delete',
   })
 
-export const changeUserPassword = (params: any) => 
+export const changeUserPassword = (params: any) =>
   request({
     url: '/user/change',
     method: 'post',
