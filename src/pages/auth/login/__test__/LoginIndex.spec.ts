@@ -2,7 +2,8 @@ import useUserStore from '@/stores/user'
 import { mount, MountingOptions } from '@vue/test-utils'
 import { mergeWith } from 'lodash'
 import LoginIndex from '../LoginIndex.vue'
-import { installQuasarPlugin } from 'app/vitest/install-quasar-plugin'
+import { installQuasarPlugin, matchMediaMock } from 'app/vitest/test-hooks'
+import { createTestingPinia } from '@pinia/testing'
 
 
 
@@ -16,15 +17,14 @@ vi.mock('vue-router', () => ({
   }),
 }))
 
-vi.mock('pinia', () => ({
-  //
-}))
+const pinia = createTestingPinia()
 
 type TestMountingOptions = MountingOptions<unknown>
 
 const createWrapper = (overrides?: TestMountingOptions) => {
   const defaultMountingOptions: TestMountingOptions = {
     global: {
+      plugins: [pinia],
       provide: [userStore],
       stubs: ['vue-router', 'pinia', 'router-link'],
     },
@@ -35,19 +35,7 @@ const createWrapper = (overrides?: TestMountingOptions) => {
 
 describe('Test Login Index', () => {
   beforeAll(() => {
-    Object.defineProperty(window, 'matchMedia', {
-      writable: true,
-      value: vi.fn().mockImplementation((query) => ({
-        matches: false,
-        media: query,
-        onchange: null,
-        addListener: vi.fn(), // Deprecated
-        removeListener: vi.fn(), // Deprecated
-        addEventListener: vi.fn(),
-        removeEventListener: vi.fn(),
-        dispatchEvent: vi.fn(),
-      })),
-    })
+    matchMediaMock()
   })
 
   test('sanity check', async () => {
@@ -55,6 +43,7 @@ describe('Test Login Index', () => {
     const username = wrapper.findComponent({ ref: 'loginUsername' })
 
     await username.setValue('admin')
+    console.log(pinia.state.value)
 
     expect(username.props().modelValue).toBe('admin')
   })
