@@ -5,8 +5,6 @@ import LoginIndex from '../LoginIndex.vue'
 import { installQuasarPlugin, matchMediaMock } from 'app/vitest/test-hooks'
 import { createTestingPinia } from '@pinia/testing'
 
-
-
 installQuasarPlugin()
 
 const userStore = useUserStore()
