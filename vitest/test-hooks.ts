@@ -1,11 +1,7 @@
-// eslint-disable-next-line
-// @ts-ignore
 import { Quasar, QuasarPluginOptions } from 'quasar/dist/quasar.esm.prod'
-
 import { cloneDeep } from 'lodash'
 import { config } from '@vue/test-utils'
 import { afterAll } from 'vitest'
-
 
 /**
  * Fix mount error similar to this one:
@@ -24,7 +20,6 @@ export function installQuasarPlugin(options?: Partial<QuasarPluginOptions>) {
     config.global = globalConfigBackup
   })
 }
-
 
 /**
  * Mock of window.matchMedia() method which is not implemented
