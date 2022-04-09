@@ -1,9 +1,9 @@
 {
   "name": "vue-ts-quasar",
   "version": "0.0.1",
-  "description": "a production-ready front-end solution based on Vue 3 with TS",
+  "description": "a front-end solution based on Vue 3 with TS in Quasar",
   "productName": "Quasar TS Admin Template",
-  "author": "psi <cyril@wendyourway.com>",
+  "author": "psi <cy.lonsido@gmail.com>",
   "private": true,
   "scripts": {
     "dev": "quasar dev",
@@ -28,14 +28,11 @@
   "devDependencies": {
     "@pinia/testing": "^0.0.11",
     "@quasar/app-vite": "^1.0.0-beta.13",
-    "@quasar/vite-plugin": "^1.0.9",
-    "@types/jest": "^27.4.1",
     "@types/lodash": "^4.14.181",
     "@types/node": "^17.0.22",
     "@types/nprogress": "^0.2.0",
     "@typescript-eslint/eslint-plugin": "^5.18.0",
     "@typescript-eslint/parser": "^5.18.0",
-    "@vue/devtools": "^6.1.4",
     "@vue/test-utils": "^2.0.0-rc.19",
     "autoprefixer": "^10.4.2",
     "c8": "^7.11.0",
@@ -49,8 +46,6 @@
     "prettier": "^2.6.2",
     "typescript": "^4.6.3",
     "unplugin-auto-import": "^0.6.9",
-    "unplugin-vue-components": "^0.18.5",
-    "vite-plugin-inspect": "^0.4.3",
     "vitest": "^0.9.0"
   },
   "engines": {
