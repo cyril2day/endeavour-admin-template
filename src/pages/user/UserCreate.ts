@@ -2,7 +2,6 @@ import User from '@/types/user'
 import { createUser, updateUser } from '@/api/users'
 import { isValidEmail } from '@/utils/validate'
 import Request from '@/types/request'
-import { AxiosResponse } from 'axios'
 import { GetNormalizedRequestState } from '@/utils/state'
 
 /**
