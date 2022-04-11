@@ -38,12 +38,14 @@ export const GetNormalizedRequestState = async <
       data: data.data,
     })
   } catch (error) {
-    const { data } = error as AxiosResponse
-    Object.assign(requestState, {
-      state: 'error',
-      message: data.message,
-      data: data.data,
-    })
+    if (error){
+      const { data } = error as AxiosResponse
+      Object.assign(requestState, {
+        state: 'error',
+        message: data.message,
+        data: data.data,
+      })
+    }
   }
   return requestState
 }
