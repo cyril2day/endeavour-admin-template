@@ -19,10 +19,9 @@
   </a>
 </p>
 
-
 # Endeavor Admin Template
 
-A front-end solution for admin interfaces based on Vue 3, Typescript and [Quasar](https://quasar.dev). 
+A front-end solution for admin interfaces based on Vue 3, Typescript and [Quasar](https://quasar.dev).
 
 This project compliments [Laravel Restful API](https://github.com/markheramis/laravel-restful-api) backend which focuses on REST API and Microservices.
 
@@ -52,7 +51,6 @@ npm install --global yarn
 # install project dependencies through yarn
 yarn install
 ```
-
 
 ## Development
 
@@ -94,12 +92,10 @@ yarn build
 
 See [Configuring quasar.config.js](https://v2.quasar.dev/quasar-cli-vite/quasar-config-js).
 
-
 ## Todos
 
-- Standalone mock server 
+- Standalone mock server
 - Cypress integration
-
 
 ## Credits
 
@@ -111,7 +107,6 @@ Many thanks to the following awesome projects:
 - [Vue](https://github.com/vuejs/core)
 - [Typescript](https://github.com/microsoft/TypeScript)
 - [Laravel Restful API](https://github.com/markheramis/laravel-restful-api)
-
 
 ## License
 

@@ -63,10 +63,6 @@ export const handleSubmit: HandleSubmit = async (user, userId) => {
       'User Update Success'
     )
   } else {
-    return await GetNormalizedRequestState(
-      createUser,
-      user,
-      'User Created'
-    )
+    return await GetNormalizedRequestState(createUser, user, 'User Created')
   }
 }
