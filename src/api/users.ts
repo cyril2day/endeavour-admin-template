@@ -1,23 +1,6 @@
 /* eslint-disable */
 import { api as request } from 'boot/axios'
 
-/*
-type ValidateCodeParams = {
-  code: string
-}
-
-type LoginParams = {
-  username: string
-  password: string
-}
-
-type ChangeUserPasswordParams = {
-  password: string
-  password_current: string
-  password_confirmation: string
-}
-*/
-
 export const login = (params: any) =>
   request({
     url: '/auth/login',
