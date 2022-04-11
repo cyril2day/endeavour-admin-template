@@ -1,7 +1,9 @@
 import { Quasar, QuasarPluginOptions } from 'quasar/dist/quasar.esm.prod'
 import { cloneDeep } from 'lodash'
-import { config } from '@vue/test-utils'
+import { config, MountingOptions } from '@vue/test-utils'
 import { afterAll } from 'vitest'
+
+export type TestMountingOptions = MountingOptions<unknown>
 
 /**
  * Fix mount error similar to this one:
