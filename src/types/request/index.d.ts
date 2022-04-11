@@ -16,7 +16,9 @@ type UserData = User.Bio &
  * TODO: refine this
  */
 
-type RoleData = unknown
+type RoleData = {
+  id: number
+}
 
 /**
  * User store login request success data
