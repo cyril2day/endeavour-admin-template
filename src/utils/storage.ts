@@ -1,4 +1,4 @@
-import { Cookies, LocalStorage, Platform } from 'quasar'
+import { Cookies, LocalStorage, Platform } from 'quasar/dist/quasar.esm.prod'
 
 /* Determines how tokens are stored
  * according to platform used. Cookies for
@@ -17,11 +17,11 @@ export enum Token {
  * auth login tokens
  */
 
+const isDesktop = () => Platform.is !== undefined &&
+  (Platform.is.desktop || Platform.is.electron)
+
 export const getToken = (tokenType = Token.access): string => {
-  if (
-    Platform.is !== undefined &&
-    (Platform.is.desktop || Platform.is.electron)
-  ) {
+  if (isDesktop()) {
     return Cookies.get(tokenType) || ''
   } else {
     return LocalStorage.getItem(tokenType) || ''
@@ -34,8 +34,7 @@ export const getToken = (tokenType = Token.access): string => {
  */
 
 export const setToken = (tokenType: string, value: string) => {
-  return Platform.is !== undefined &&
-    (Platform.is.desktop || Platform.is.electron)
+  return isDesktop()
     ? Cookies.set(tokenType, value, { secure: true, path: '/' })
     : LocalStorage.set(tokenType, value)
 }
