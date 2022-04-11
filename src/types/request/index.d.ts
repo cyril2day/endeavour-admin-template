@@ -41,7 +41,7 @@ type RequestSuccessData = UserData | RoleData | LoginData
  */
 
 type RequestErrorData = {
-  [field: string]: string[]
+  [field: string]: unknown
 }
 
 declare namespace Request {
