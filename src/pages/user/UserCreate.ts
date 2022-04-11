@@ -3,6 +3,7 @@ import { createUser, updateUser } from '@/api/users'
 import { isValidEmail } from '@/utils/validate'
 import Request from '@/types/request'
 import { AxiosResponse } from 'axios'
+import { GetNormalizedRequestState } from '@/utils/state'
 
 /**
  * Local types
@@ -55,30 +56,17 @@ export const passwordRules = [
 ]
 
 export const handleSubmit: HandleSubmit = async (user, userId) => {
-  const requestState = {} as Request.Success | Request.Error
-  try {
-    if (!userId) {
-      const { data } = await createUser({ ...user })
-      Object.assign(requestState, {
-        state: 'ok',
-        message: 'User Created',
-        data: data.data,
-      })
-    } else {
-      const { data } = await updateUser(parseInt(userId), { ...user })
-      Object.assign(requestState, {
-        state: 'ok',
-        message: 'User Updated',
-        data: data.data,
-      })
-    }
-  } catch (error) {
-    const err = error as AxiosResponse
-    Object.assign(requestState, {
-      state: 'error',
-      message: err.data.message,
-      data: err.data.data,
-    })
+  if (userId) {
+    return await GetNormalizedRequestState(
+      updateUser,
+      { id: userId, data: user },
+      'User Update Success'
+    )
+  } else {
+    return await GetNormalizedRequestState(
+      createUser,
+      user,
+      'User Created'
+    )
   }
-  return requestState
 }
