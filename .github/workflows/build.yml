@@ -1,9 +1,9 @@
-name: "Build Test"
+name: "Build"
 on:
   push
 
 jobs:
-  build_test:
+  build:
     name: build
     runs-on: ubuntu-latest
     strategy:
@@ -16,9 +16,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node }}
-      - name: "install"
+      - name: "Install node modules"
         run: yarn install
-      - name: "build"
+      - name: "Build for production"
         run: yarn build
-      - name: "test"
-        run: yarn test:unit
