@@ -28,7 +28,7 @@ const createWrapper = (overrides?: TestMountingOptions) => {
     global: {
       plugins: [pinia],
       provide: [userStore],
-      stubs: ['vue-router', 'pinia', 'router-link'],
+      stubs: ['vue-router', 'router-link'],
     },
   }
 
