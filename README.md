@@ -5,9 +5,6 @@
   <a href="https://github.com/quasarframework/quasar">
     <img src="https://img.shields.io/npm/v/quasar?label=quasar" alt="quasar">
   </a>
-  <a>
-    <img src="https://img.shields.io/npm/v/%40quasar/app-vite?label=@quasar/app-vite" alt="quasar-app-vite">
-  </a>
   <a href="https://github.com/vitest-dev/vitest">
     <img src="https://img.shields.io/npm/v/vitest?color=729B1B&label=vitest" alt="vitest">
   </a>
