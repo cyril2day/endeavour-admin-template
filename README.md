@@ -8,11 +8,11 @@
   <a href="https://github.com/vitest-dev/vitest">
     <img src="https://img.shields.io/npm/v/vitest?color=729B1B&label=vitest" alt="vitest">
   </a>
-  <a href="https://github.com/cyril2day/endeavor-admin-template">
-    <img src="https://github.com/cyril2day/endeavor-admin-template/workflows/Build/badge.svg?branch=master" alt="Build Status"> 
+  <a href="https://github.com/cyril2day/endeavour-admin-template/actions">
+    <img src="https://github.com/cyril2day/endeavour-admin-template/workflows/Build/badge.svg?branch=master" alt="Build CI"> 
   </a>
-  <a href="https://github.com/cyril2day/endeavor-admin-template">
-    <img src="https://github.com/cyril2day/endeavor-admin-template/workflows/Tests/badge.svg?branch=master" alt="Tests Status"> 
+  <a href="https://github.com/cyril2day/endeavour-admin-template/actions">
+    <img src="https://github.com/cyril2day/endeavour-admin-template/workflows/Tests/badge.svg?branch=master" alt="Tests CI"> 
   </a>
   <a href="http://makeapullrequest.com">
     <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat" alt="PRs Welcome">
@@ -22,7 +22,7 @@
   </a>
 </p>
 
-# Endeavor Admin Template
+# Endeavour Admin Template
 
 A front-end solution for admin interfaces based on Vue 3, Typescript and [Quasar](https://quasar.dev). 
 
@@ -32,12 +32,12 @@ This project compliments [Laravel Restful API](https://github.com/markheramis/la
 
 ```bash
 # clone the project
-git clone https://github.com/cyril2day/endeavor-admin-template.git
+git clone https://github.com/cyril2day/endeavour-admin-template.git
 ```
 
 ```bash
 # cd into the project directory
-cd endeavor-admin-template
+cd endeavour-admin-template
 ```
 
 ```bash
