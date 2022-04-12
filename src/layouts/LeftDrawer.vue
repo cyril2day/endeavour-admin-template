@@ -96,7 +96,7 @@ const resolveRouteIcon = (route: RouteRecordRaw): string => {
           <q-img :src="shipLogo" />
         </q-avatar>
       </q-btn>
-      <q-toolbar-title>ABC Corp.</q-toolbar-title>
+      <q-toolbar-title class="left-drawer__title">ENDEAVOUR</q-toolbar-title>
     </q-toolbar>
 
     <template v-for="route in routes" :key="route">
@@ -146,3 +146,11 @@ const resolveRouteIcon = (route: RouteRecordRaw): string => {
     </template>
   </q-list>
 </template>
+
+<style lang="scss">
+.left-drawer__title {
+  font-family: chelsea;
+  font-weight: 700;
+  padding-left: 20px;
+}
+</style>
