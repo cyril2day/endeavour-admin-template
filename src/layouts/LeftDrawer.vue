@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import usePermissionStore from '@/stores/permission'
 import { RouteRecordName, RouteRecordRaw, useRouter } from 'vue-router'
+import shipLogo from '@/assets/ship-logo.png'
 
 /**
  * The router instance
@@ -89,8 +90,12 @@ const resolveRouteIcon = (route: RouteRecordRaw): string => {
 
 <template>
   <q-list>
-    <q-toolbar class="text-dark bordered main-layout__top-header">
-      <q-btn flat round dense icon="business" />
+    <q-toolbar class="text-dark bordered main-layout__top-header q-px-none">
+      <q-btn flat style="top: -1px">
+        <q-avatar square>
+          <q-img :src="shipLogo" />
+        </q-avatar>
+      </q-btn>
       <q-toolbar-title>ABC Corp.</q-toolbar-title>
     </q-toolbar>
 
