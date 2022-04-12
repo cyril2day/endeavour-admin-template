@@ -1,9 +1,12 @@
-import { setActivePinia, createPinia } from 'pinia'
 import { Cookies } from 'quasar/dist/quasar.esm.prod'
 import useUserStore from '../user'
 import * as req from '@/api/users'
+import { StoreBeforeEach } from './storeTestHelpers'
+
 
 vi.mock('@/api/users')
+
+StoreBeforeEach()
 
 const credentials = {
   username: 'admin',
@@ -16,10 +19,6 @@ const userStore = useUserStore()
 describe(
   'User Store Unit Test',
   () => {
-    beforeEach(() => {
-      setActivePinia(createPinia())
-    })
-
     afterEach(() => {
       vi.clearAllMocks()
       vi.resetModules()
