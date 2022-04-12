@@ -1,6 +1,7 @@
 export as namespace User
 
 type role = {
+  id: number
   name: string
   slug: string
   permissions: {
