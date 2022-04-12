@@ -1,6 +1,11 @@
 // app global css in SCSS form
 @import 'nprogress/nprogress.css';
 
+@font-face {
+  font-family: chelsea;
+  src: url(./fonts/Chelsea.woff);
+}
+
 .main-layout__top-header {
   backdrop-filter: blur(7px);
   background-color: rgba(0, 0, 0, 0.1);
