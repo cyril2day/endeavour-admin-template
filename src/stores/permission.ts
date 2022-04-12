@@ -60,7 +60,7 @@ const state: IPermissionState = {
   dynamicRoutes: [],
 }
 
-const GenerateRoutes = async (roles: User.Permission['roles']) => {
+const GenerateRoutes = (roles: User.Permission['roles']) => {
   /* eslint-disable-next-line */
   let accessedRoutes: any
 
