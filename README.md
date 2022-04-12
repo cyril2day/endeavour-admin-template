@@ -9,10 +9,10 @@
     <img src="https://img.shields.io/npm/v/vitest?color=729B1B&label=vitest" alt="vitest">
   </a>
   <a href="https://github.com/cyril2day/endeavor-admin-template">
-    <img src="https://github.com/cyril2day/endeavor-admin-template/actions/workflows/build.yml/badge.svg?branch=master" alt="Build Status"> 
+    <img src="https://github.com/cyril2day/endeavor-admin-template/workflows/Build/badge.svg?branch=master" alt="Build Status"> 
   </a>
   <a href="https://github.com/cyril2day/endeavor-admin-template">
-    <img src="https://github.com/cyril2day/endeavor-admin-template/actions/workflows/test.yml/badge.svg?branch=master" alt="Tests Status"> 
+    <img src="https://github.com/cyril2day/endeavor-admin-template/workflows/Tests/badge.svg?branch=master" alt="Tests Status"> 
   </a>
   <a href="http://makeapullrequest.com">
     <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat" alt="PRs Welcome">
