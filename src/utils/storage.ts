@@ -17,8 +17,8 @@ export enum Token {
  * auth login tokens
  */
 
-const isDesktop = () => Platform.is !== undefined &&
-  (Platform.is.desktop || Platform.is.electron)
+const isDesktop = () =>
+  Platform.is !== undefined && (Platform.is.desktop || Platform.is.electron)
 
 export const getToken = (tokenType = Token.access): string => {
   if (isDesktop()) {

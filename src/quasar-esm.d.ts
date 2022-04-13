@@ -5,7 +5,13 @@
  */
 
 declare module 'quasar/dist/quasar.esm.prod' {
-  import { Quasar, QuasarPluginOptions, Cookies, LocalStorage, Platform } from 'quasar'
+  import {
+    Quasar,
+    QuasarPluginOptions,
+    Cookies,
+    LocalStorage,
+    Platform,
+  } from 'quasar'
 
   export { Quasar, QuasarPluginOptions, Cookies, LocalStorage, Platform }
 }

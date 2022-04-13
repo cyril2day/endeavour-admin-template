@@ -14,12 +14,17 @@ export default defineConfig({
     vue(),
     AutoImport({
       imports: [
-        'vue', 'vitest', 'pinia',
+        'vue',
+        'vitest',
+        'pinia',
         {
           'quasar/dist/quasar.esm.prod': [
-            'Cookies', 'Platform', 'LocalStorage', 'Quasar'
-          ]
-        }
+            'Cookies',
+            'Platform',
+            'LocalStorage',
+            'Quasar',
+          ],
+        },
       ],
       dts: './vitest/vitest-auto-imports.d.ts',
     }),

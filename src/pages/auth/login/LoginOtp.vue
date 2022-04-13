@@ -107,9 +107,9 @@ onBeforeMount(() => {
     bordered
   >
     <q-card-section>
-      <q-form ref='otpForm' class="otp__form" @submit.prevent="submit">
+      <q-form ref="otpForm" class="otp__form" @submit.prevent="submit">
         <q-input
-          ref='otpInput'
+          ref="otpInput"
           v-model="otp"
           label="Enter OTP Code"
           lazy-rules
@@ -131,7 +131,7 @@ onBeforeMount(() => {
         {{ feedback }}
       </div>
       <q-btn
-        ref='otpSubmit'
+        ref="otpSubmit"
         label="Proceed"
         type="submit"
         color="blue-grey-7"

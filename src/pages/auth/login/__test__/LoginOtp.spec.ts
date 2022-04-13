@@ -33,66 +33,54 @@ const createWrapper = (overrides?: TestMountingOptions) => {
   return mount(LoginOtp, mergeWith(defaultMountingOptions, overrides))
 }
 
-describe(
-  'Login OTP Component Test',
-  () => {
-    afterEach(() => {
-      vi.clearAllMocks()
-      vi.resetModules()
+describe('Login OTP Component Test', () => {
+  afterEach(() => {
+    vi.clearAllMocks()
+    vi.resetModules()
+  })
+
+  test('redirects to login page if token is not set or undefined', () => {
+    expect.assertions(3)
+    vi.spyOn(console, 'warn').mockImplementationOnce(() => null)
+    const wrapper = createWrapper()
+    const router = useRouter()
+
+    expect(wrapper.props().token).toBe(undefined)
+    expect(router.push).toHaveBeenCalledTimes(1)
+    expect(router.push).toHaveBeenCalledWith('/login')
+  })
+
+  test('shows the OTP form when token is properly set', async () => {
+    expect.assertions(3)
+    const wrapper = createWrapper({
+      props: {
+        token: 'token',
+      },
     })
+    const form = wrapper.findComponent({ ref: 'otpForm' })
+    const input = wrapper.findComponent({ ref: 'otpInput' })
+    const submit = wrapper.findComponent({ ref: 'otpSubmit' })
 
-    test(
-      'redirects to login page if token is not set or undefined',
-      () => {
-        expect.assertions(3)
-        vi.spyOn(console, 'warn').mockImplementationOnce(() => null)
-        const wrapper = createWrapper()
-        const router = useRouter()
+    expect(form.exists()).toBe(true)
+    expect(input.exists()).toBe(true)
+    expect(submit.exists()).toBe(true)
+  })
 
-        expect(wrapper.props().token).toBe(undefined)
-        expect(router.push).toHaveBeenCalledTimes(1)
-        expect(router.push).toHaveBeenCalledWith('/login')
-      }
-    )
+  test('submit', async () => {
+    const wrapper = createWrapper({
+      props: {
+        token: 'token',
+      },
+    })
+    const input = wrapper.findComponent({ ref: 'otpInput' })
+    const submit = wrapper.findComponent({ ref: 'otpSubmit' })
+    const otpCode = '123456' // code must be 6 characters
 
-    test(
-      'shows the OTP form when token is properly set',
-      async() => {
-        expect.assertions(3)
-        const wrapper = createWrapper({
-          props: {
-            token: 'token'
-          }
-        })
-        const form = wrapper.findComponent({ ref: 'otpForm' })
-        const input = wrapper.findComponent({ ref: 'otpInput' })
-        const submit = wrapper.findComponent({ ref: 'otpSubmit' })
+    await input.setValue(otpCode)
+    expect(input.props().modelValue).toBe(otpCode)
 
-        expect(form.exists()).toBe(true)
-        expect(input.exists()).toBe(true)
-        expect(submit.exists()).toBe(true)
-      }
-    )
-
-    test(
-      'submit',
-      async() => {
-        const wrapper = createWrapper({
-          props: {
-            token: 'token'
-          }
-        })
-        const input = wrapper.findComponent({ ref: 'otpInput' })
-        const submit = wrapper.findComponent({ ref: 'otpSubmit' })
-        const otpCode = '123456' // code must be 6 characters
-
-        await input.setValue(otpCode)
-        expect(input.props().modelValue).toBe(otpCode)
-
-        await submit.trigger('click')
-        expect(validateCode).toHaveBeenCalledOnce()
-        expect(validateCode).toHaveBeenCalledWith({ code: otpCode })
-      }
-    )
-  }
-)
+    await submit.trigger('click')
+    expect(validateCode).toHaveBeenCalledOnce()
+    expect(validateCode).toHaveBeenCalledWith({ code: otpCode })
+  })
+})
