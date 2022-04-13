@@ -38,3 +38,17 @@ export const getUserInfoResponseOK = {
 }
 
 export const getUserInfo = vi.fn(() => Promise.resolve(getUserInfoResponseOK))
+
+// OTP Verify
+export const verifyCodeResponseOK = {
+  data: {
+    error: false,
+    data: {
+      message: 'valid token',
+      token: 'token2',
+    },
+    notification: 0,
+  },
+}
+
+export const validateCode = vi.fn(() => Promise.resolve(verifyCodeResponseOK))
