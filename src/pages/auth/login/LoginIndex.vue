@@ -62,7 +62,7 @@ const submit = async () => {
        * before accessing the dashboard. OTP form requires
        * to be passed a token prop.
        */
-      router.push({ name: 'Mfa', params: { token: token } })
+      router.push({ name: 'Checkpoint', params: { token: token } })
     /**
      * else dashboard is accessible, no mfa is set
      */ else router.push('/')
@@ -89,7 +89,7 @@ onBeforeMount(() => {
    */
 
   if (loginToken.value)
-    router.push({ name: 'Mfa', params: { token: loginToken.value } })
+    router.push({ name: 'Checkpoint', params: { token: loginToken.value } })
 })
 
 watch(
