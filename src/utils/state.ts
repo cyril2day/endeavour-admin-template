@@ -1,5 +1,6 @@
-import Request from '@/types/request'
-import { AxiosPromise, AxiosResponse } from 'axios'
+import { api } from '@/boot/axios'
+import RequestState from '@/types/request'
+import { AxiosResponse } from 'axios'
 
 /**
  * Generic type for a callback fn.
@@ -7,7 +8,9 @@ import { AxiosPromise, AxiosResponse } from 'axios'
  * @returns AxiosPromise
  */
 
-type CallBackFn = <T>(params: T) => AxiosPromise
+/* eslint-disable-next-line */
+type CallBackFn = (params: any) => ReturnType<typeof api>
+type ParamsFn = Parameters<CallBackFn>[0]
 
 /**
  * Normalizes success or error state of a
@@ -21,11 +24,9 @@ type CallBackFn = <T>(params: T) => AxiosPromise
  * @returns the normalized request state
  */
 
-export const GetNormalizedRequestState = async <
-  T = Request.Success | Request.Error
->(
+export const Fetch = async <T = RequestState.Success | RequestState.Error>(
   callback: CallBackFn,
-  params: unknown,
+  params: ParamsFn,
   message = ''
 ): Promise<T> => {
   const requestState = {} as T
