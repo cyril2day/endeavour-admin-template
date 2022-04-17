@@ -16,6 +16,7 @@ declare module '@vue/runtime-core' {
 // for each client)
 const api = axios.create({ baseURL: process.env.SERVER_BASEURL })
 
+/* c8 ignore start */
 // Request interceptors
 api.interceptors.request.use(
   (config) => {
@@ -50,5 +51,6 @@ export default boot(({ app }) => {
   // ^ ^ ^ this will allow you to use this.$api (for Vue Options API form)
   //       so you can easily perform requests against your app's API
 })
+/* c8 ignore stop */
 
 export { api }
