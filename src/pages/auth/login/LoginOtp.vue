@@ -45,8 +45,8 @@ const submit = async () => {
     const { data } = await validateCode({ code: otp.value })
 
     removeToken(Token.login)
-    setToken(Token.access, data.token)
-    userStore.SetToken(data.token)
+    setToken(Token.access, data.data.token)
+    userStore.SetToken(data.data.token)
 
     router.push('/')
   } catch (error) {
@@ -57,7 +57,6 @@ const submit = async () => {
     /**
      * Enable submit after requests are handled
      */
-
     submitBtnLoading.value = false
   }
 }

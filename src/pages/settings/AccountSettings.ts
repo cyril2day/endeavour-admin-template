@@ -1,9 +1,9 @@
 import useAppStore from '@/stores/app'
 import { useWindowSize } from '@vueuse/core'
 import User from '@/types/user'
-import Request from '@/types/request'
+import RequestState from '@/types/request'
 import { updateUser, changeUserPassword } from '@/api/users'
-import { GetNormalizedRequestState } from '@/utils/state'
+import { Fetch } from '@/utils/state'
 
 /**
  * Local Types
@@ -14,19 +14,19 @@ type User = Pick<
 > &
   Pick<User.Account, 'username'>
 
-type HandleAccountUpdate = (
+export type HandleAccountUpdate = (
   user: User
-) => Promise<Request.Success | Request.Error>
+) => Promise<RequestState.Success | RequestState.Error>
 
-type ChangeUserPasswordPayload = {
+export type ChangeUserPasswordPayload = {
   password: string
   password_current: string
   password_confirmation: string
 }
 
-type HandleAccountPasswordChange = (
+export type HandleAccountPasswordChange = (
   payload: ChangeUserPasswordPayload
-) => Promise<Request.Success | Request.Error>
+) => Promise<RequestState.Success | RequestState.Error>
 
 /**
  * Local mixins
@@ -52,7 +52,7 @@ export const pageContainerWidth = computed(
  * @returns normalized success or error state
  */
 export const handleAccountUpdate: HandleAccountUpdate = async (user) => {
-  return await GetNormalizedRequestState(
+  return await Fetch(
     updateUser,
     { id: user.id, data: { ...user } },
     'User Updated'
@@ -69,9 +69,5 @@ export const handleAccountUpdate: HandleAccountUpdate = async (user) => {
 export const handleAccountPasswordChange: HandleAccountPasswordChange = async (
   payload: ChangeUserPasswordPayload
 ) => {
-  return await GetNormalizedRequestState(
-    changeUserPassword,
-    payload,
-    'Password Updated'
-  )
+  return await Fetch(changeUserPassword, payload, 'Password Updated')
 }

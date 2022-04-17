@@ -77,7 +77,7 @@ const reset = () => {
  * component is used on both edit and create.
  */
 
-watchEffect(async () => {
+watchEffect(() => {
   if (!props.userId) {
     isEdit.value = false
     feedbacks.value = []
@@ -85,17 +85,23 @@ watchEffect(async () => {
     reset()
   } else {
     isEdit.value = true
-    try {
-      const { data } = await getUserById(props.userId)
+    nextTick(async () => {
+      try {
+        const { data } = await getUserById(props.userId)
 
-      const { first_name, last_name, email, username } = data.data.data
+        const { first_name, last_name, email, username } = data.data.data
 
-      user.value = { first_name, last_name, email, username }
-    } catch (err) {
-      isEdit.value = false
-      router.push('/user/create')
-    }
+        user.value = { first_name, last_name, email, username }
+      } catch (err) {
+        isEdit.value = false
+        router.push('/user/create')
+      }
+    })
   }
+})
+
+defineExpose({
+  q,
 })
 </script>
 
@@ -109,6 +115,7 @@ watchEffect(async () => {
         @keyup.enter="submit"
       >
         <q-input
+          ref="firstNameInput"
           v-model="user.first_name"
           label="First Name"
           :rules="firstNameRules"
@@ -116,12 +123,14 @@ watchEffect(async () => {
         />
 
         <q-input
+          ref="lastNameInput"
           v-model="user.last_name"
           label="Last Name"
           :rules="lastNameRules"
         />
 
         <q-input
+          ref="emailInput"
           v-model="user.email"
           label="Email"
           type="email"
@@ -129,6 +138,7 @@ watchEffect(async () => {
         />
 
         <q-input
+          ref="usernameInput"
           v-model="user.username"
           label="Username"
           :rules="usernameRules"
@@ -136,6 +146,7 @@ watchEffect(async () => {
 
         <q-input
           v-if="!isEdit"
+          ref="passwordInput"
           v-model="user.password"
           label="Password"
           :type="showPwd ? 'text' : 'password'"
@@ -143,6 +154,7 @@ watchEffect(async () => {
         >
           <template #append>
             <q-icon
+              ref="showPwdToggle"
               :name="showPwd ? 'visibility_off' : 'visibility'"
               class="user-create__show-pwd"
               @click="showPwd = !showPwd"
@@ -176,12 +188,19 @@ watchEffect(async () => {
       </div>
 
       <q-btn
+        ref="submitBtn"
         :label="isEdit ? 'Update' : 'Submit'"
         color="primary"
         :icon="isEdit ? 'save_as' : 'save'"
         @click="submit"
       ></q-btn>
-      <q-btn v-if="!isEdit" label="Clear" icon="clear" @click="reset"></q-btn>
+      <q-btn
+        v-if="!isEdit"
+        ref="clearBtn"
+        label="Clear"
+        icon="clear"
+        @click="reset"
+      ></q-btn>
     </q-card-actions>
   </q-card>
 </template>
