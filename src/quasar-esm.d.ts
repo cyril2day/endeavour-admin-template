@@ -11,7 +11,17 @@ declare module 'quasar/dist/quasar.esm.prod' {
     Cookies,
     LocalStorage,
     Platform,
+    Notify,
+    useQuasar,
   } from 'quasar'
 
-  export { Quasar, QuasarPluginOptions, Cookies, LocalStorage, Platform }
+  export {
+    Quasar,
+    QuasarPluginOptions,
+    Cookies,
+    LocalStorage,
+    Platform,
+    Notify,
+    useQuasar,
+  }
 }
