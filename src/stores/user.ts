@@ -1,25 +1,17 @@
-import { getUserInfo, login } from '@/api/users'
+import { getUserInfo, login, LoginParams } from '@/api/users'
 import { getToken, removeToken, setToken, Token } from '@/utils/storage'
 import { defineStore } from 'pinia'
 import pinia from '@/stores/index'
 import User from '@/types/user'
-import { GetNormalizedRequestState } from '@/utils/state'
-
-/**
- * Parameter types for user login
- *
- */
-
-type ParamLogin = Pick<User.Account, 'username' | 'password'>
-
-type UserToken = {
-  token: string
-}
+import { Fetch } from '@/utils/state'
 
 /**
  * The user store state types
  *
  */
+
+type UserToken = { token: string }
+
 type UserStoreState = UserToken &
   Pick<User.Bio, 'id' | 'first_name' | 'last_name' | 'email' | 'phone_number'> &
   Pick<User.Account, 'username' | 'authy_verified' | 'default_auth_factor'> &
@@ -52,12 +44,8 @@ const state: UserStoreState = {
  * @returns normalized success or error state.
  */
 
-const Login = async (params: ParamLogin) => {
-  const loginRequest = await GetNormalizedRequestState(
-    login,
-    params,
-    'User Login Success'
-  )
+const Login = async (params: LoginParams) => {
+  const loginRequest = await Fetch(login, params, 'User Login Success')
 
   if (loginRequest.state === 'ok' && 'token' in loginRequest.data) {
     const { token, verify } = loginRequest.data

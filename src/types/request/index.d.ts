@@ -1,6 +1,6 @@
 import User from '@/types/user'
 
-export as namespace Request
+export as namespace RequestState
 
 /**
  * User info request success data without
@@ -41,10 +41,10 @@ type RequestSuccessData = UserData | RoleData | LoginData
  */
 
 type RequestErrorData = {
-  [field: string]: unknown
+  [field: string]: string[]
 }
 
-declare namespace Request {
+declare namespace RequestState {
   interface Success {
     state: 'ok'
     data: RequestSuccessData
@@ -58,4 +58,4 @@ declare namespace Request {
   }
 }
 
-export = Request
+export = RequestState
