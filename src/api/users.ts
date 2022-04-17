@@ -1,6 +1,7 @@
 /* eslint-disable */
 import { api as request } from 'boot/axios'
 
+/* c8 ignore start */
 export const login = (params: any) =>
   request({
     url: '/auth/login',
@@ -60,3 +61,4 @@ export const changeUserPassword = (params: any) =>
     method: 'post',
     params,
   })
+/* c8 ignore stop */
