@@ -10,12 +10,20 @@ const root = resolve(__dirname, '../')
 export default defineConfig({
   root,
   mode: 'test',
+  css: {
+    preprocessorOptions: {
+      scss: {
+        additionalData: `@import "@/css/quasar.variables.scss";`,
+      },
+    },
+  },
   plugins: [
     vue(),
     AutoImport({
       imports: [
         'vue',
         'vitest',
+        'vue-router',
         'pinia',
         {
           'quasar/dist/quasar.esm.prod': [
@@ -23,6 +31,7 @@ export default defineConfig({
             'Platform',
             'LocalStorage',
             'Quasar',
+            'Notify',
           ],
         },
       ],
@@ -47,5 +56,8 @@ export default defineConfig({
     globals: true,
     environment: 'jsdom',
     exclude: [...configDefaults.exclude],
+    coverage: {
+      exclude: ['**/src/api/__mocks__/**'],
+    },
   },
 })
