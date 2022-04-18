@@ -140,6 +140,7 @@ watch(
           </template>
           <template #append>
             <q-icon
+              ref="showPwdBtn"
               :name="showPwd ? 'visibility' : 'visibility_off'"
               @click="showPwd = !showPwd"
               style="cursor: pointer"
@@ -178,11 +179,13 @@ watch(
         <div
           class="col-xs-12 col-md-4 row items-center login__create-account"
           :class="isMediumScreen ? '' : 'order-last'"
-          :style="isMediumScreen ? '' : 'margin-top: 30px;'"
+          :style="
+            /* c8 ignore start */ isMediumScreen
+              ? ''
+              : 'margin-top: 30px;' /* c8 ignore stop */
+          "
         >
-          <router-link to="/register" class="text-dark"
-            >Create account</router-link
-          >
+          <router-link to="/" class="text-dark">Create account</router-link>
         </div>
         <div class="col-xs-12 col-md-5 row">
           <q-btn
