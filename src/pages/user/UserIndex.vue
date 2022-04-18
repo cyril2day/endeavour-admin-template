@@ -52,6 +52,10 @@ const userDelete = async (user: User) => {
   fetchTable()
 }
 
+const exportToExcel = () => {
+  console.log('Export to excel')
+}
+
 onBeforeMount(() => {
   fetchTable()
 })
@@ -88,6 +92,15 @@ onBeforeMount(() => {
           </q-btn-group>
         </q-td>
       </template>
+      <template v-slot:top-right>
+        <q-btn
+          color='primary'
+          icon-right='archive'
+          label='Export to excel'
+          no-caps
+          @click='exportToExcel'
+        />
+      </template>
     </q-table>
   </div>
 </template>
@@ -100,31 +113,31 @@ onBeforeMount(() => {
   td:nth-child(7) {
     position: sticky;
     right: 0;
-    background-color: #fff;
+    background-color: #f7f7f7;
   }
 }
 
 .user-table__header-id {
-  width: 100px;
+  width: 80px;
 }
 
 .user-table__header-email {
-  width: 280px;
+  width: 270px;
 }
 
 .user-table__header-role {
-  width: 150px;
+  width: 200px;
 }
 
 .user-table__header-username {
-  width: 200px;
+  width: 220px;
 }
 
 .user-table__header-firstname {
-  width: 200px;
+  width: 220px;
 }
 
 .user-table__header-lastname {
-  width: 200px;
+  width: 220px;
 }
 </style>
