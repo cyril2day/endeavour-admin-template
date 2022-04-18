@@ -13,7 +13,7 @@ export default defineConfig({
   css: {
     preprocessorOptions: {
       scss: {
-        additionalData: `@import "@/css/quasar.variables.scss";`,
+        additionalData: '@import "@/css/quasar.variables.scss";',
       },
     },
   },
