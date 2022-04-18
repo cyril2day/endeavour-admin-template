@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { validateCode } from '@/api/users'
+import { getUserInfo, validateCode } from '@/api/users'
 import useUserStore from '@/stores/user'
-import { getToken, removeToken, setToken, Token } from '@/utils/storage'
+import { removeToken, setToken, Token } from '@/utils/storage'
 import { useRouter } from 'vue-router'
 
 /**
@@ -22,6 +22,7 @@ const props = defineProps({
 
 const router = useRouter()
 const userStore = useUserStore()
+const isAuthenticated = ref(false)
 
 /**
  * For two-way attribute binding on
@@ -49,8 +50,14 @@ const submit = async () => {
     userStore.SetToken(data.data.token)
 
     router.push('/')
-  } catch (error) {
-    if (error instanceof Error) feedback.value = error.message
+    /* eslint-disable-next-line */
+  } catch (error: any) {
+    if (
+      typeof error === 'object' &&
+      !Array.isArray(error) &&
+      'message' in error
+    )
+      feedback.value = error.message
 
     feedback.value = 'Could not validate otp.'
   } finally {
@@ -68,6 +75,7 @@ const submit = async () => {
 const backToLogin = () => {
   removeToken(Token.login)
   userStore.ResetToken()
+  router.push('/login')
 }
 
 /**
@@ -83,7 +91,7 @@ const clearFeedback = () => {
  * https://vuejs.org/guide/essentials/lifecycle.html
  */
 
-onBeforeMount(() => {
+onBeforeMount(async () => {
   /**
    * Do not render the OTP form unless token
    * prop is passed a value. Falls back to
@@ -93,14 +101,21 @@ onBeforeMount(() => {
     router.push('/login')
   } else {
     // hydrate modified token from mfa props
-    userStore.SetToken(props.token ?? `${getToken()}`)
+    try {
+      await getUserInfo().then(() => {
+        isAuthenticated.value = true
+        userStore.SetToken(props.token)
+      })
+    } catch (err) {
+      backToLogin()
+    }
   }
 })
 </script>
 
 <template>
   <q-card
-    v-if="props.token"
+    v-if="isAuthenticated"
     class="otp__card q-mx-lg q-my-lg q-px-lg q-py-lg"
     flat
     bordered
@@ -122,10 +137,7 @@ onBeforeMount(() => {
       </q-form>
     </q-card-section>
     <q-card-actions class="otp__actions">
-      <div
-        :visibility="feedback ? 'visible' : 'none'"
-        class="otp__feedback text-caption text-weight-light"
-      >
+      <div v-if="feedback" class="otp__feedback text-caption text-weight-light">
         <q-icon v-show="feedback" name="warning_amber" class="q-pr-md" />
         {{ feedback }}
       </div>
@@ -142,9 +154,9 @@ onBeforeMount(() => {
       />
 
       <div class="otp__change-user">
-        <router-link to="/login" class="text-dark" @click="backToLogin"
-          >Login as different user?</router-link
-        >
+        <p class="otp__back-to-login text-dark" @click="backToLogin">
+          Login as different user?
+        </p>
       </div>
     </q-card-actions>
   </q-card>
@@ -168,6 +180,10 @@ onBeforeMount(() => {
   color: $loginWarning;
   margin-top: 10px;
   clear: both;
+}
+
+.otp__back-to-login {
+  cursor: pointer;
 }
 
 .otp__change-user {
