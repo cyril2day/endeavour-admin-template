@@ -58,6 +58,7 @@ export default defineConfig({
     exclude: [...configDefaults.exclude],
     coverage: {
       exclude: ['**/src/api/__mocks__/**'],
+      reporter: 'clover'
     },
   },
 })
