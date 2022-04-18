@@ -109,7 +109,7 @@ const GetUserInfo = async () => {
 const ResetToken = () => {
   store.token = ''
   store.roles = []
-  removeToken(Token.access)
+  if (getToken()) removeToken()
 }
 
 const SetToken = (token: string) => {

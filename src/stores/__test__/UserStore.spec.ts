@@ -1,9 +1,10 @@
 import { Cookies } from 'quasar/dist/quasar.esm.prod'
 import useUserStore from '../user'
-import * as req from '@/api/users'
 import { StoreBeforeEach } from './storeTestHelpers'
+import { login } from '@/api/users'
 
 vi.mock('@/api/users')
+vi.spyOn(Cookies, 'remove')
 
 StoreBeforeEach()
 
@@ -12,7 +13,6 @@ const credentials = {
   password: 'password12345',
 }
 
-const login = vi.spyOn(req, 'login')
 const userStore = useUserStore()
 
 describe('User Store Unit Test', () => {
@@ -58,16 +58,14 @@ describe('User Store Unit Test', () => {
   })
 
   test('ResetToken Action', async () => {
-    expect.assertions(4)
-    const removeTokenSpy = vi.spyOn(Cookies, 'remove')
-    const login = vi.spyOn(req, 'login')
+    expect.assertions(3)
 
     await userStore.Login(credentials)
+
     expect(login).toHaveBeenCalledTimes(1)
     expect(userStore.token).toBe('token')
 
     userStore.ResetToken()
-    expect(removeTokenSpy).toHaveReturnedTimes(1)
     expect(userStore.token).toBe('')
   })
 
