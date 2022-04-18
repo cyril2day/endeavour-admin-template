@@ -51,7 +51,17 @@ export const verifyCodeResponseOK = {
   },
 }
 
-export const validateCode = vi.fn(() => Promise.resolve(verifyCodeResponseOK))
+export const validateCode = vi.fn((request) => {
+  if (request.code === '123456') {
+    return Promise.resolve(verifyCodeResponseOK)
+  } else {
+    return Promise.reject({
+      state: 'error',
+      message: 'Invalid Token',
+      data: [],
+    })
+  }
+})
 
 const createUserResponseOK = {
   error: false,
