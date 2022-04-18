@@ -14,6 +14,9 @@
   <a href="https://github.com/cyril2day/endeavour-admin-template/actions">
     <img src="https://github.com/cyril2day/endeavour-admin-template/workflows/Tests/badge.svg?branch=master" alt="Tests CI"> 
   </a>
+  <a href="https://scrutinizer-ci.com/g/cyril2day/endeavour-admin-template/?branch=master">
+    <img src="https://scrutinizer-ci.com/g/cyril2day/endeavour-admin-template/badges/coverage.png?b=master" alt="Coverage CI">
+  </a>
   <a href="http://makeapullrequest.com">
     <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat" alt="PRs Welcome">
   </a>
