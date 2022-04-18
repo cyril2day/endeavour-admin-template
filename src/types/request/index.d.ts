@@ -47,14 +47,14 @@ type RequestErrorData = {
 declare namespace RequestState {
   interface Success {
     state: 'ok'
-    data: RequestSuccessData
     message: string
+    data: RequestSuccessData
   }
 
   interface Error {
     state: 'error'
-    data: RequestErrorData
     message: string
+    data?: RequestErrorData
   }
 }
 
