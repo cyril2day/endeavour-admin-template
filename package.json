@@ -11,8 +11,8 @@
     "build": "quasar clean && quasar build",
     "lint": "eslint --ext .js,.ts,.vue ./",
     "format": "prettier --write \"**/*.{js,ts,vue,scss,html,md,json}\" --ignore-path .gitignore",
-    "test:unit": "vitest --config './vitest/vitest.config.ts'",
-    "coverage": "vitest run --coverage --config './vitest/vitest.config.ts'",
+    "test:unit": "vitest --config ./vitest/vitest.config.ts",
+    "coverage": "vitest run --coverage --config ./vitest/vitest.config.ts",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run"
   },
@@ -52,7 +52,7 @@
     "vitest": "^0.9.3"
   },
   "engines": {
-    "node": "^16 || ^14.19",
+    "node": "^16 || ^18",
     "npm": ">= 6.13.4",
     "yarn": ">= 1.21.1"
   }
