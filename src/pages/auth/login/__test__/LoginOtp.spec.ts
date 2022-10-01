@@ -4,20 +4,19 @@ import { flushPromises, mount } from '@vue/test-utils'
 import { installQuasarPlugin, TestMountingOptions } from 'app/vitest/test-hooks'
 import { mergeWith } from 'lodash'
 import LoginOtp from '../LoginOtp.vue'
-import { useRouter } from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router'
 import * as usersApi from '@/api/users'
 import * as storage from '@/utils/storage'
+import { constantRoutes } from '@/router/routes'
 
 installQuasarPlugin()
 
 vi.mock('@/api/users')
 
-const mockPush = vi.fn()
-vi.mock('vue-router', () => ({
-  useRouter: () => ({
-    push: mockPush,
-  }),
-}))
+const router = createRouter({
+  history: createWebHistory(),
+  routes: constantRoutes,
+})
 
 const pinia = createTestingPinia()
 const userStore = useUserStore()
@@ -25,7 +24,7 @@ const userStore = useUserStore()
 const createWrapper = (overrides?: TestMountingOptions) => {
   const defaultMountingOptions: TestMountingOptions = {
     global: {
-      plugins: [pinia],
+      plugins: [pinia, router],
       provide: [userStore],
       stubs: ['vue-router', 'router-link'],
     },
@@ -43,12 +42,14 @@ describe('Login OTP Component Test', () => {
   test('redirects to login page if token is not set or undefined', () => {
     expect.assertions(3)
     vi.spyOn(console, 'warn').mockImplementationOnce(() => null)
+    vi.spyOn(router, 'push')
+
     const wrapper = createWrapper()
-    const router = useRouter()
+    const { push } = router
 
     expect(wrapper.props().token).toBe(undefined)
-    expect(router.push).toHaveBeenCalledTimes(1)
-    expect(router.push).toHaveBeenCalledWith('/login')
+    expect(push).toHaveBeenCalledTimes(1)
+    expect(push).toHaveBeenCalledWith('/login')
   })
 
   test('backend checks if token is valid on before otp page is shown', async () => {
@@ -67,14 +68,16 @@ describe('Login OTP Component Test', () => {
     expect.assertions(2)
     const rejectResponse = () => Promise.reject()
     vi.spyOn(usersApi, 'getUserInfo').mockImplementationOnce(rejectResponse)
+    vi.spyOn(router, 'push')
 
-    const router = useRouter()
+    const { push } = router
+
     createWrapper({ props: { token: 'token' } })
 
     await flushPromises()
 
-    expect(router.push).toHaveBeenCalledTimes(1)
-    expect(router.push).toHaveBeenCalledWith('/login')
+    expect(push).toHaveBeenCalledTimes(1)
+    expect(push).toHaveBeenCalledWith('/login')
   })
 
   test('shows the OTP form when token is properly set', async () => {

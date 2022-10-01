@@ -8,19 +8,18 @@ import {
   TestMountingOptions,
 } from 'app/vitest/test-hooks'
 import { createTestingPinia } from '@pinia/testing'
-import { useRouter } from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router'
 import RequestState from '@/types/request'
+import { constantRoutes } from '@/router/routes'
 
 installQuasarPlugin()
 
 vi.mock('@/api/users')
 
-const mockPush = vi.fn()
-vi.mock('vue-router', () => ({
-  useRouter: () => ({
-    push: mockPush,
-  }),
-}))
+const router = createRouter({
+  history: createWebHistory(),
+  routes: constantRoutes,
+})
 
 const pinia = createTestingPinia()
 const userStore = useUserStore()
@@ -28,7 +27,7 @@ const userStore = useUserStore()
 const createWrapper = (overrides?: TestMountingOptions) => {
   const defaultMountingOptions: TestMountingOptions = {
     global: {
-      plugins: [pinia],
+      plugins: [pinia, router],
       provide: [userStore],
       stubs: ['vue-router', 'router-link'],
     },
@@ -106,7 +105,8 @@ describe('Login Index Component Test', () => {
 
   test('login submit ok on user with mfa enabled', async () => {
     expect.assertions(5)
-    const router = useRouter()
+    vi.spyOn(router, 'push')
+    const { push } = router
     const loginOk = {
       state: 'ok',
       message: 'User Login Success',
@@ -119,8 +119,8 @@ describe('Login Index Component Test', () => {
 
     expect(submit.props().loading).toBe(true) // disable button on click
     expect(login).toHaveBeenCalledTimes(1) // call login api request
-    expect(router.push).toHaveBeenCalledTimes(1)
-    expect(router.push).toHaveBeenCalledWith({
+    expect(push).toHaveBeenCalledTimes(1)
+    expect(push).toHaveBeenCalledWith({
       name: 'Checkpoint',
       params: { token: 'token' },
     })
@@ -131,7 +131,10 @@ describe('Login Index Component Test', () => {
   })
 
   test('login submit ok on user without mfa enabled', async () => {
-    const router = useRouter()
+    expect.assertions(5)
+
+    vi.spyOn(router, 'push')
+    const { push } = router
     const loginOk = {
       state: 'ok',
       message: 'User Login Success',
@@ -143,8 +146,8 @@ describe('Login Index Component Test', () => {
     await submit.trigger('click')
     expect(submit.props().loading).toBe(true) // disable button on click
     expect(login).toHaveBeenCalledTimes(1) // call login api request
-    expect(router.push).toHaveBeenCalledTimes(1)
-    expect(router.push).toHaveBeenCalledWith('/')
+    expect(push).toHaveBeenCalledTimes(1)
+    expect(push).toHaveBeenCalledWith('/')
 
     // submit button is enabled after successful login call
     await nextTick()
@@ -174,12 +177,16 @@ describe('Login Index Component Test', () => {
   })
 
   test('redirects to the MFA page if login token is set in the device storage (Cookies)', async () => {
+    expect.assertions(1)
+    vi.spyOn(router, 'push')
+    const { push } = router
+
     document.cookie = 'login_token=token'
     createWrapper()
-    await nextTick()
-    const router = useRouter()
 
-    expect(router.push).toHaveBeenCalledTimes(1)
+    await nextTick()
+
+    expect(push).toHaveBeenCalledTimes(1)
   })
 
   /*

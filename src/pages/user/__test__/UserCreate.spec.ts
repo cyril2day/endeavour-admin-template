@@ -4,7 +4,8 @@ import { installQuasarPlugin, TestMountingOptions } from 'app/vitest/test-hooks'
 import UserCreate from '../UserCreate.vue'
 import { Notify } from 'quasar/dist/quasar.esm.prod'
 import * as request from '@/api/users'
-import { useRouter } from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router'
+import { constantRoutes } from '@/router/routes'
 
 installQuasarPlugin({
   plugins: {
@@ -14,16 +15,15 @@ installQuasarPlugin({
 
 vi.mock('@/api/users')
 
-const mockPush = vi.fn()
-vi.mock('vue-router', () => ({
-  useRouter: () => ({
-    push: mockPush,
-  }),
-}))
+const router = createRouter({
+  history: createWebHistory(),
+  routes: constantRoutes,
+})
 
 const createWrapper = (overrides?: TestMountingOptions) => {
   const defaultMountingOptions: TestMountingOptions = {
     global: {
+      plugins: [router],
       stubs: ['router-link', 'vue-router'],
     },
   }
@@ -246,6 +246,7 @@ describe('User Edit Test', () => {
 
   test('redirects to the user create page if userId is non-existent', async () => {
     expect.assertions(5)
+    vi.spyOn(router, 'push')
     const nonExistentId = '99'
     const wrapper = createWrapper({
       props: {
@@ -253,15 +254,15 @@ describe('User Edit Test', () => {
       },
     })
     const getUserByIdSpy = vi.spyOn(request, 'getUserById')
-    const router = useRouter()
+    const { push } = router
 
     await flushPromises()
 
     expect(wrapper.props().userId).toBe(nonExistentId)
     expect(request.getUserById).toHaveBeenCalledWith(nonExistentId)
     expect(getUserByIdSpy).rejects.toThrowError()
-    expect(router.push).toHaveBeenCalledTimes(1)
-    expect(router.push).toHaveBeenCalledWith('/user/create')
+    expect(push).toHaveBeenCalledTimes(1)
+    expect(push).toHaveBeenCalledWith('/user/create')
   })
 
   test('update user', async () => {
@@ -278,8 +279,7 @@ describe('User Edit Test', () => {
 
     const submit = wrapper.findComponent({ ref: 'submitBtn' })
     await submit.trigger('click')
-
-    await nextTick()
+    await flushPromises()
 
     expect(submitSpy).toHaveBeenCalledTimes(1)
   })
