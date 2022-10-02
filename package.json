@@ -23,6 +23,7 @@
     "lodash": "^4.17.21",
     "nprogress": "^0.2.0",
     "pinia": "^2.0.13",
+    "postcss": "^8.4.17",
     "quasar": "^2.8.4",
     "vue": "^3.2.33",
     "vue-router": "^4.0.0"
@@ -35,9 +36,9 @@
     "@types/nprogress": "^0.2.0",
     "@typescript-eslint/eslint-plugin": "^5.19.0",
     "@typescript-eslint/parser": "^5.19.0",
+    "@vitest/coverage-c8": "^0.23.4",
     "@vue/test-utils": "^2.0.0-rc.20",
     "autoprefixer": "^10.4.2",
-    "c8": "^7.11.0",
     "cors": "^2.8.5",
     "cypress": "^10.9.0",
     "dotenv": "^16.0.0",
