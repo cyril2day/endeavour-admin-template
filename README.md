@@ -1,18 +1,18 @@
 <p align="center">
   <a href="https://github.com/vuejs/core">
-    <img src="https://img.shields.io/badge/vue-3.2.31-brightgreen.svg" alt="vue">
+    <img src="https://img.shields.io/badge/vue-3.2.33-brightgreen.svg" alt="vue">
   </a>
   <a href="https://github.com/quasarframework/quasar">
-    <img src="https://img.shields.io/npm/v/quasar?label=quasar" alt="quasar">
+    <img src="https://img.shields.io/npm/v/%40quasar/app-vite?label=@quasar/app-vite" alt="quasar-app-vite">
   </a>
   <a href="https://github.com/vitest-dev/vitest">
     <img src="https://img.shields.io/npm/v/vitest?color=729B1B&label=vitest" alt="vitest">
   </a>
   <a href="https://github.com/cyril2day/endeavour-admin-template/actions">
-    <img src="https://github.com/cyril2day/endeavour-admin-template/workflows/Build/badge.svg?branch=master" alt="Build CI"> 
+    <img src="https://github.com/cyril2day/endeavour-admin-template/workflows/Build/badge.svg?branch=master" alt="Build CI">
   </a>
   <a href="https://github.com/cyril2day/endeavour-admin-template/actions">
-    <img src="https://github.com/cyril2day/endeavour-admin-template/workflows/Tests/badge.svg?branch=master" alt="Tests CI"> 
+    <img src="https://github.com/cyril2day/endeavour-admin-template/workflows/Tests/badge.svg?branch=master" alt="Tests CI">
   </a>
   <a href="https://scrutinizer-ci.com/g/cyril2day/endeavour-admin-template/?branch=master">
     <img src="https://scrutinizer-ci.com/g/cyril2day/endeavour-admin-template/badges/coverage.png?b=master" alt="Coverage CI">
