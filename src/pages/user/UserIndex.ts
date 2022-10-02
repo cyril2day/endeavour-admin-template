@@ -18,14 +18,6 @@ export const columns: QTableProps['columns'] = [
     align: 'left',
     classes: 'user-table__header-email',
   },
-  /* the role column */
-  {
-    name: 'roles',
-    label: 'Role',
-    field: 'roles',
-    align: 'left',
-    classes: 'user-table__header-role',
-  },
   /* the username column */
   {
     name: 'username',

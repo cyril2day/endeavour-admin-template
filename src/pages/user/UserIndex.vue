@@ -11,7 +11,7 @@ type User = Pick<User.Bio, 'id' | 'first_name' | 'last_name' | 'email'> &
 const q = useQuasar()
 const router = useRouter()
 
-const rows = ref<User[]>([])
+const userRows = ref<User[]>([])
 const loading = ref(true)
 
 const userEdit = (user: User) => {
@@ -19,8 +19,9 @@ const userEdit = (user: User) => {
 }
 
 const fetchTable = async () => {
-  rows.value = []
+  userRows.value = []
   loading.value = true
+
   try {
     const { data } = await getUsers({})
     if (data && data.data instanceof Array) {
@@ -29,8 +30,7 @@ const fetchTable = async () => {
         const { email, username, first_name, last_name } = d.attributes
         const { data: roles } = d.relationships.roles
         console.log(roles)
-
-        rows.value.push({
+        userRows.value.push({
           id: parseInt(d.id),
           email: email,
           roles: roles[0],
@@ -47,8 +47,8 @@ const fetchTable = async () => {
   }
 }
 
-const userDelete = async (user: User) => {
-  await deleteUser(user.id)
+const userDelete = (user: User) => {
+  deleteUser(user.id)
   fetchTable()
 }
 
@@ -71,7 +71,7 @@ onBeforeMount(() => {
       :loading="loading"
       :grid="q.screen.xs"
       :columns="columns"
-      :rows="rows"
+      :rows="userRows"
       row-key="id"
     >
       <template v-slot:body-cell-actions="{ row }">
@@ -83,6 +83,7 @@ onBeforeMount(() => {
               size="sm"
               @click="userEdit(row)"
             ></q-btn>
+
             <q-btn
               label="Delete"
               icon="delete"
@@ -92,20 +93,21 @@ onBeforeMount(() => {
           </q-btn-group>
         </q-td>
       </template>
+
       <template v-slot:top-right>
         <q-btn
-          color='primary'
-          icon-right='archive'
-          label='Export to excel'
+          color="primary"
+          icon-right="archive"
+          label="Export to excel"
           no-caps
-          @click='exportToExcel'
+          @click="exportToExcel"
         />
       </template>
     </q-table>
   </div>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .user-table__sticky-column {
   /* set sticky column to the 7th child, which is the `Actions` column */
 
