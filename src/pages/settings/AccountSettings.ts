@@ -15,7 +15,7 @@ type User = Pick<
   Pick<User.Account, 'username'>
 
 export type HandleAccountUpdate = (
-  user: User
+  user: User,
 ) => Promise<RequestState.Success | RequestState.Error>
 
 export type ChangeUserPasswordPayload = {
@@ -25,7 +25,7 @@ export type ChangeUserPasswordPayload = {
 }
 
 export type HandleAccountPasswordChange = (
-  payload: ChangeUserPasswordPayload
+  payload: ChangeUserPasswordPayload,
 ) => Promise<RequestState.Success | RequestState.Error>
 
 /**
@@ -42,7 +42,7 @@ export const leftDrawerWidth = computed(() => {
 })
 
 export const pageContainerWidth = computed(
-  () => width.value - leftDrawerWidth.value
+  () => width.value - leftDrawerWidth.value,
 )
 
 /**
@@ -55,7 +55,7 @@ export const handleAccountUpdate: HandleAccountUpdate = async (user) => {
   return await Fetch(
     updateUser,
     { id: user.id, data: { ...user } },
-    'User Updated'
+    'User Updated',
   )
 }
 
@@ -67,7 +67,7 @@ export const handleAccountUpdate: HandleAccountUpdate = async (user) => {
  * @returns normalized success or error state
  */
 export const handleAccountPasswordChange: HandleAccountPasswordChange = async (
-  payload: ChangeUserPasswordPayload
+  payload: ChangeUserPasswordPayload,
 ) => {
   return await Fetch(changeUserPassword, payload, 'Password Updated')
 }

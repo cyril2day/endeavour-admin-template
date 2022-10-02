@@ -50,7 +50,7 @@ let Router: Router
 async function beforeGuard(
   to: RouteLocationNormalized,
   _: RouteLocationNormalized,
-  next: NavigationGuardNext
+  next: NavigationGuardNext,
 ) {
   const { path: targetPath } = to
 

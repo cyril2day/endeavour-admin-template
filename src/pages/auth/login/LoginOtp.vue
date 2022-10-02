@@ -121,7 +121,11 @@ onBeforeMount(async () => {
     bordered
   >
     <q-card-section>
-      <q-form ref="otpForm" class="otp__form" @submit.prevent="submit">
+      <q-form
+        ref="otpForm"
+        class="otp__form"
+        @submit.prevent="submit"
+      >
         <q-input
           ref="otpInput"
           v-model="otp"
@@ -137,8 +141,15 @@ onBeforeMount(async () => {
       </q-form>
     </q-card-section>
     <q-card-actions class="otp__actions">
-      <div v-if="feedback" class="otp__feedback text-caption text-weight-light">
-        <q-icon v-show="feedback" name="warning_amber" class="q-pr-md" />
+      <div
+        v-if="feedback"
+        class="otp__feedback text-caption text-weight-light"
+      >
+        <q-icon
+          v-show="feedback"
+          name="warning_amber"
+          class="q-pr-md"
+        />
         {{ feedback }}
       </div>
       <q-btn
@@ -154,7 +165,10 @@ onBeforeMount(async () => {
       />
 
       <div class="otp__change-user">
-        <p class="otp__back-to-login text-dark" @click="backToLogin">
+        <p
+          class="otp__back-to-login text-dark"
+          @click="backToLogin"
+        >
           Login as different user?
         </p>
       </div>

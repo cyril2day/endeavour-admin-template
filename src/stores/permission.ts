@@ -20,7 +20,7 @@ export interface IPermissionState {
 
 const hasPermission = (
   roles: User.Permission['roles'],
-  route: IRouteRecordNormalized
+  route: IRouteRecordNormalized,
 ) => {
   if (route.meta) {
     return roles.some((role) => {
@@ -35,7 +35,7 @@ const hasPermission = (
 
 export const filterAsyncRoutes = (
   routes: RouteRecordRaw[],
-  roles: User.Permission['roles']
+  roles: User.Permission['roles'],
 ) => {
   const res: RouteRecordRaw[] = []
   /* eslint-disable-next-line */

@@ -45,7 +45,11 @@ const toggleDrawerShow = () => {
 
     <q-toolbar-title></q-toolbar-title>
 
-    <q-btn round flat icon="account_circle">
+    <q-btn
+      round
+      flat
+      icon="account_circle"
+    >
       <q-menu
         transition-show="flip-right"
         transition-hide="flip-left"
@@ -53,12 +57,20 @@ const toggleDrawerShow = () => {
         class="topheader__actions"
       >
         <q-list style="min-width: 200px">
-          <q-item clickable dense padding to="/settings">
+          <q-item
+            clickable
+            dense
+            padding
+            to="/settings"
+          >
             <q-item-section class="text-body2 text-weight-light"
               >Account Settings</q-item-section
             >
             <q-item-section avatar>
-              <q-icon name="settings" size="xs" />
+              <q-icon
+                name="settings"
+                size="xs"
+              />
             </q-item-section>
           </q-item>
           <q-item clickable>
@@ -66,16 +78,25 @@ const toggleDrawerShow = () => {
               >Support</q-item-section
             >
             <q-item-section avatar>
-              <q-icon name="support" size="xs" />
+              <q-icon
+                name="support"
+                size="xs"
+              />
             </q-item-section>
           </q-item>
           <q-separator />
-          <q-item clickable @click="signout">
+          <q-item
+            clickable
+            @click="signout"
+          >
             <q-item-section class="text-body2 text-weight-light"
               >Logout</q-item-section
             >
             <q-item-section avatar>
-              <q-icon name="logout" size="xs" />
+              <q-icon
+                name="logout"
+                size="xs"
+              />
             </q-item-section>
           </q-item>
         </q-list>

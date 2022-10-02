@@ -37,7 +37,7 @@ const routes = computed(() => permissionStore.routes)
 
 const handleExpand = (
   parentPath: string,
-  children: RouteRecordRaw[]
+  children: RouteRecordRaw[],
 ): boolean => {
   let temp = false
   children.forEach((child) => {
@@ -91,7 +91,10 @@ const resolveRouteIcon = (route: RouteRecordRaw): string => {
 <template>
   <q-list>
     <q-toolbar class="text-dark bordered main-layout__top-header q-px-none">
-      <q-btn flat style="top: -1px">
+      <q-btn
+        flat
+        style="top: -1px"
+      >
         <q-avatar square>
           <q-img :src="shipLogo" />
         </q-avatar>
@@ -99,7 +102,10 @@ const resolveRouteIcon = (route: RouteRecordRaw): string => {
       <q-toolbar-title class="left-drawer__title">ENDEAVOUR</q-toolbar-title>
     </q-toolbar>
 
-    <template v-for="route in routes" :key="route">
+    <template
+      v-for="route in routes"
+      :key="route"
+    >
       <q-item
         v-if="
           (!route.children && route.meta) ||
@@ -124,7 +130,10 @@ const resolveRouteIcon = (route: RouteRecordRaw): string => {
         :icon="resolveRouteIcon(route)"
         :content-inset-level="0.5"
       >
-        <q-list v-for="(child, index) in route.children" :key="index">
+        <q-list
+          v-for="(child, index) in route.children"
+          :key="index"
+        >
           <q-item
             v-if="!child.meta?.hidden"
             :to="resolveFullPath(route.path, child)"

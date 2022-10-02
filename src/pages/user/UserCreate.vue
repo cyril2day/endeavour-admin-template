@@ -170,7 +170,10 @@ defineExpose({
         class="user-create__feedback text-caption text-weight-light"
       >
         <q-list dense>
-          <q-item v-for="feedback in feedbacks" :key="feedback">
+          <q-item
+            v-for="feedback in feedbacks"
+            :key="feedback"
+          >
             <q-item-section avatar>
               <q-icon
                 v-show="feedback.length"

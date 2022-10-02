@@ -15,7 +15,7 @@ type User = Pick<User.Bio, 'first_name' | 'last_name' | 'email'> &
 
 type HandleSubmit = (
   user: User,
-  userId?: string
+  userId?: string,
 ) => Promise<RequestState.Success | RequestState.Error>
 
 /**
@@ -62,7 +62,7 @@ export const handleSubmit: HandleSubmit = async (user, userId) => {
     return await Fetch(
       updateUser,
       { id: userId, data: user },
-      'User Update Success'
+      'User Update Success',
     )
   } else {
     return await Fetch(createUser, user, 'User Created')

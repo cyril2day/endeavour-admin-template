@@ -14,7 +14,10 @@ const handleScreenChange = () => {
 </script>
 
 <template>
-  <div class="row q-ma-xs" :class="handleScreenChange()">
+  <div
+    class="row q-ma-xs"
+    :class="handleScreenChange()"
+  >
     <AccountProfile />
 
     <AccountSecurity />

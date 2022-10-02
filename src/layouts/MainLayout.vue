@@ -24,7 +24,11 @@ watchEffect(() => {
       />
     </q-header>
 
-    <q-drawer v-model="drawerIsShown" show-if-above bordered>
+    <q-drawer
+      v-model="drawerIsShown"
+      show-if-above
+      bordered
+    >
       <left-drawer />
     </q-drawer>
 

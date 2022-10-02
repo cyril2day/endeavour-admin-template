@@ -28,7 +28,7 @@ api.interceptors.request.use(
 
     return config
   },
-  (error) => Promise.reject(error)
+  (error) => Promise.reject(error),
 )
 // Response Interceptors
 api.interceptors.response.use(
@@ -37,7 +37,7 @@ api.interceptors.response.use(
 
     return Promise.reject(response)
   },
-  (error) => Promise.reject(error.response)
+  (error) => Promise.reject(error.response),
 )
 
 export default boot(({ app }) => {

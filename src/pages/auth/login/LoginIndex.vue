@@ -99,7 +99,7 @@ watch(
       const input = loginPassword.value.getNativeElement() as HTMLInputElement
       await nextTick(() => input.focus())
     }
-  }
+  },
 )
 </script>
 
@@ -111,7 +111,10 @@ watch(
     bordered
   >
     <q-card-section class="login__section">
-      <q-form class="login__form" @submit.prevent="submit">
+      <q-form
+        class="login__form"
+        @submit.prevent="submit"
+      >
         <q-input
           ref="loginUsername"
           v-model="login.username"
@@ -153,7 +156,10 @@ watch(
         v-if="feedback"
         class="login__feedback text-caption text-weight-light"
       >
-        <q-icon name="warning_amber" class="q-pr-md" />
+        <q-icon
+          name="warning_amber"
+          class="q-pr-md"
+        />
         {{ feedback }}
       </div>
     </q-card-section>
@@ -161,15 +167,23 @@ watch(
     <q-card-actions class="login__actions">
       <div class="col-xs-12 login__forgot-pass">
         <!-- <router-link to="/password-reset" class="text-dark" -->
-        <router-link to="/login" class="text-dark"
+        <router-link
+          to="/login"
+          class="text-dark"
           >Forgot Password?</router-link
         >
       </div>
 
-      <div class="row" style="margin: 30px 0">
+      <div
+        class="row"
+        style="margin: 30px 0"
+      >
         <p>
           Not your computer? Use Guest mode to sign in privately.
-          <a href="#" style="text-decoration: none; color: #33474f">
+          <a
+            href="#"
+            style="text-decoration: none; color: #33474f"
+          >
             Learn more</a
           >
         </p>
@@ -185,7 +199,11 @@ watch(
               : 'margin-top: 30px;' /* c8 ignore stop */
           "
         >
-          <router-link to="/" class="text-dark">Create account</router-link>
+          <router-link
+            to="/"
+            class="text-dark"
+            >Create account</router-link
+          >
         </div>
         <div class="col-xs-12 col-md-5 row">
           <q-btn

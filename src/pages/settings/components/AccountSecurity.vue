@@ -28,14 +28,27 @@ const toggleResponsiveClass = () => {
         align="justify"
         narrow-indicator
       >
-        <q-tab name="password" label="Password" />
-        <q-tab name="otp" label="Multi-Factor Authentication" />
-        <q-tab name="accessToken" label="Access Token" />
+        <q-tab
+          name="password"
+          label="Password"
+        />
+        <q-tab
+          name="otp"
+          label="Multi-Factor Authentication"
+        />
+        <q-tab
+          name="accessToken"
+          label="Access Token"
+        />
       </q-tabs>
 
       <q-separator />
 
-      <q-tab-panels v-model="tab" animated keep-alive>
+      <q-tab-panels
+        v-model="tab"
+        animated
+        keep-alive
+      >
         <q-tab-panel name="password">
           <AccountPassword />
         </q-tab-panel>

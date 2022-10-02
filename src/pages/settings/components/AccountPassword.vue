@@ -62,7 +62,7 @@ watch(
         newPwd.value?.focus()
       })
     }
-  }
+  },
 )
 </script>
 
@@ -108,7 +108,10 @@ watch(
     </div>
     <div v-else>
       <p class="text-body2">
-        <q-icon name="check_circle" color="secondary" />
+        <q-icon
+          name="check_circle"
+          color="secondary"
+        />
         It's a good idea to use a strong password that you're not using
         elsewhere
       </p>
@@ -164,7 +167,10 @@ watch(
     class="account__password-feedback text-caption text-weight-light"
   >
     <q-list dense>
-      <q-item v-for="feedback in feedbacks" :key="feedback">
+      <q-item
+        v-for="feedback in feedbacks"
+        :key="feedback"
+      >
         <q-item-section avatar>
           <q-icon
             v-show="feedback.length"

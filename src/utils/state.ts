@@ -27,7 +27,7 @@ type ParamsFn = Parameters<CallBackFn>[0]
 export const Fetch = async <T = RequestState.Success | RequestState.Error>(
   callback: CallBackFn,
   params: ParamsFn,
-  message = ''
+  message = '',
 ): Promise<T> => {
   const requestState = {} as T
 
